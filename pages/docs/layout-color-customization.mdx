@@ -1,0 +1,65 @@
+import { Callout, Steps } from "nextra/components"
+
+# Theme Color Customization
+Customizing the theme color in Dashcode is highly flexible, allowing you to use any custom color as the theme color.
+
+
+### Adding a New Color:
+
+To begin, open the theme.scss file and add your new color following the code snippet provided.
+
+<Callout>Ensure you use the HSL color values.</Callout>
+
+
+
+
+```scss filename="app/[locale]/theme.css"
+.theme-dark {
+     --sidebar: 222.2 84% 4.9%;
+     --header: 222.2 84% 4.9%;
+}
+.theme-rose {
+     --sidebar: 341, 64%, 43%; 
+     --header: 341, 64%, 43%;
+     --secondary: 339, 60%, 51%;
+      --menu-arrow: 339, 60%, 51%;
+    --menu-arrow-active: 336, 67%, 60%;
+     
+}
+
+.theme-gray {
+     --sidebar:  210, 10%, 23%;
+     --header:  210, 10%, 23%;
+
+      --secondary: 207, 14%, 31%;
+      --menu-arrow: 207, 14%, 31%;
+    --menu-arrow-active: 203, 16%, 43%;
+}
+```
+### Defining Your Color:
+
+After creating your color, define it in the use-config.ts file by referring to the code snippet provided.
+
+
+```ts filename="hooks/use-config.ts"
+export const Config = {
+  "collapsed": false,
+  "theme": "violet",
+  "skin": "default",
+  "layout": "vertical",
+  "sidebar": "draggable",
+  "menuHidden": false,
+  "showSearchBar": true,
+  "topHeader": "default",
+  "contentWidth": "wide",
+  "navbar": "sticky",
+  "footer": "sticky",
+  "isRtl": false,
+  "showSwitcher": true,
+  "subMenu": false,
+  "hasSubMenu": false,
+  "sidebarTheme": "redwood",
+  "headerTheme": "light",
+  "radius": 0.5
+};
+```

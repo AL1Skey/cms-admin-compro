@@ -1,0 +1,77 @@
+# Layout Customization
+
+By default, Dashcode includes three predefined layouts. However, you can create new layouts based on your requirements.
+
+### Adding a New Layout:
+
+Start by opening the layout.tsx file and adding your new layout using the provided code snippet.
+
+
+```tsx filename="app/[locale]/layout.tsx"
+
+export default async function RootLayout({
+  children,
+  params: { locale },
+}: Readonly<{
+  children: React.ReactNode;
+  params: { locale: string };
+}>) {
+
+  const messages = await getMessages();
+  const direction = getLangDir(locale);
+  return (
+    <html lang={locale} dir={direction}>
+      <body className={`${inter.className} dashcode-app`}>
+        <NextIntlClientProvider messages={messages} locale={locale}>
+          <AuthProvider>
+            <ThemeProvider attribute="class"
+
+              defaultTheme="light">
+              <MountedProvider>
+
+                <DirectionProvider direction={direction}>
+                  {children}
+                </DirectionProvider>
+
+              </MountedProvider>
+              <Toaster />
+              <SonnerToaster />
+            </ThemeProvider>
+          </AuthProvider>
+        </NextIntlClientProvider>
+      </body>
+    </html>
+  );
+};
+
+```
+
+### Defining Your Layout:
+
+Once you've created your layout, define it in the use-config.ts file by following the code snippet provided.
+
+
+```ts filename="hooks/use-config.ts"
+export type Config = {
+  collapsed: boolean
+  theme: string
+  skin: 'default' | 'bordered'
+  layout: layoutType
+  sidebar: sidebarType
+  menuHidden: boolean,
+  showSearchBar: boolean,
+  showSwitcher: boolean
+  topHeader: 'default' | 'links'
+  contentWidth: 'wide' | 'boxed'
+  navbar: navBarType
+  footer: 'sticky' | 'default' | 'hidden'
+  isRtl: boolean
+  subMenu: boolean
+  hasSubMenu: boolean
+  sidebarTheme: string,
+  headerTheme: string,
+  sidebarBgImage?: string
+  radius: number
+
+}
+```
