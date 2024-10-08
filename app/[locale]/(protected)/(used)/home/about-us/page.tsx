@@ -23,7 +23,7 @@ const page = () => {
       <Card>
         <CardHeader>
           <div className="flex justify-between">
-            <CardTitle>Contact Info</CardTitle>
+            <CardTitle>About Us</CardTitle>
           </div>
         </CardHeader>
         <CardContent>

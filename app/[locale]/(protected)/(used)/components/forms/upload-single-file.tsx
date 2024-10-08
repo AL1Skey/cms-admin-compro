@@ -9,7 +9,11 @@ import Image from "next/image";
 interface FileWithPreview extends File {
   preview: string;
 }
-const UploadSingleFile = () => {
+type UploadSingleFileProps = Partial<{
+  [key: string]: any;
+}>
+
+const UploadSingleFile = ({edit=false,...props}:UploadSingleFileProps) => {
   const [files, setFiles] = useState<FileWithPreview[]>([]);
 
   const { getRootProps, getInputProps } = useDropzone({
@@ -55,7 +59,7 @@ const UploadSingleFile = () => {
         </div>
       ) : (
         <div {...getRootProps({ className: "dropzone" })}>
-          <input name="image" {...getInputProps()} />
+          <input name="image" {...getInputProps()} disabled={edit}/>
 
           <div className="w-full text-center border-dashed border border-default-200 dark:border-default-300 rounded-md py-[52px] flex items-center flex-col">
             <CloudUpload className="text-default-300 w-10 h-10" />

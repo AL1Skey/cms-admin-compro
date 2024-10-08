@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-
+import UploadSingleFile from '../../components/forms/upload-single-file';
 type PageProps = Partial<{
     data: {
         image: string|undefined;
@@ -59,7 +59,7 @@ const Form = ({ data }: PageProps) => {
                     <form onSubmit={handleSubmit}>
                         <div>
                             <Label htmlFor="image">Image:</Label>
-                            <Input name="image" type="text" id="image" value={image} onChange={handleImageChange} readOnly={notEdit} />
+                            <UploadSingleFile edit={notEdit}/>
                         </div>
                         <div>
                             <Label htmlFor="title">Title:</Label>
