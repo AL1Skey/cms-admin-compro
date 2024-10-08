@@ -57,6 +57,13 @@ export function getMenuList(pathname: string, t: any): Group[] {
               children: [],
             },
             {
+              href: "/home/about-us",
+              label: "About Us",
+              active: pathname === "/home/about-us",
+              icon: "",
+              children: [],
+            },
+            {
               href: "/home/footer",
               label: "Contact Info",
               active: pathname === "/home/footer",
