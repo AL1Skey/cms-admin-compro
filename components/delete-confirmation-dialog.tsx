@@ -16,7 +16,7 @@ const DeleteConfirmationDialog = ({ open, onClose, onConfirm, defaultToast = tru
 }: {
   open: boolean;
   onClose: () => void;
-  onConfirm?: () => Promise<void>;
+  onConfirm?: () => void|Promise<void>;
   defaultToast?: boolean;
   toastMessage?: string;
 }) => {

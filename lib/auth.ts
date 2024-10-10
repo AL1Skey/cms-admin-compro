@@ -4,7 +4,7 @@ import Google from "next-auth/providers/google";
 
 import CredentialsProvider from "next-auth/providers/credentials";
 import { getUserByEmail, type User } from "./data";
-
+import { comparePassword } from "./bcrypt";
 
 
 export const { auth, handlers, signIn, signOut } = NextAuth({
@@ -25,9 +25,10 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
                 if (credentials === null) return null;
                 
                 try {
-                    const user = getUserByEmail(credentials?.email as string);
+                    const url = `${process.env.NEXT_PUBLIC_API_URL}/public/user?email=${credentials.email}`;
+                    const user = await fetch(url).then((res) => res.json());
                     if (user) {
-                        const isMatch = user?.password === credentials.password;
+                        const isMatch = comparePassword(`${credentials.password}`,user?.password);
 
                         if (isMatch) {
                             return user;

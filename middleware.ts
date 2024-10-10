@@ -3,10 +3,6 @@ import {NextRequest, NextResponse} from 'next/server';
 import {locales} from '@/config';
 
 export default async function middleware(request: NextRequest) {
-  
- 
-
-
   // Step 1: Use the incoming request (example)
   const defaultLocale = request.headers.get('dashcode-locale') || 'en';
  
@@ -14,7 +10,6 @@ export default async function middleware(request: NextRequest) {
   const handleI18nRouting = createMiddleware({
     locales,
     defaultLocale
-    
   });
   const response = handleI18nRouting(request);
  

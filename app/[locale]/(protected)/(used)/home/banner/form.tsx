@@ -5,6 +5,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
+import { add } from './action/action';
+
 type PageProps = Partial<{
     dataTitle: string;
     dataDescription: string;
@@ -14,8 +16,6 @@ type PageProps = Partial<{
 const Form = ({ dataTitle = '', dataDescription = '', dataImage = null }: PageProps) => {
     const [title, setTitle] = useState(dataTitle);
     const [description, setDescription] = useState(dataDescription);
-    const [image, setImage] = useState<File | string| null>(dataImage);
-    const [imageUrl, setImageUrl] = useState<string | null>(null);
 
     const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setTitle(e.target.value);
@@ -25,24 +25,15 @@ const Form = ({ dataTitle = '', dataDescription = '', dataImage = null }: PagePr
         setDescription(e.target.value);
     };
 
-    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files && e.target.files.length > 0) {
-            const selectedImage = e.target.files[0];
-            setImage(selectedImage);
-            setImageUrl(URL.createObjectURL(selectedImage));
-        }
-    };
+   
 
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        // Handle form submission logic here
-    };
+    
 
     return (
         <div>
             <Card>
             <CardContent>
-            <form onSubmit={handleSubmit}>
+            <form action={add} encType="multipart/form-data">
                 <div>
                     <Label htmlFor="title">Image Title:</Label>
                     <Input name='title' type="text" id="title" value={title} onChange={handleTitleChange} />

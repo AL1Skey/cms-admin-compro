@@ -6,10 +6,23 @@ import ThemeCustomize from '@/components/partials/customizer'
 import DashCodeHeader from '@/components/partials/header'
 import { auth } from "@/lib/auth";
 import { redirect } from "@/components/navigation";
+import { getCookie } from "typescript-cookie";
+import { cookies } from "next/headers";
+import { verifyToken } from "@/lib/jwt";
 const layout = async ({ children }: { children: React.ReactNode }) => {
-    const session = await auth();
 
-    if (!session) {
+    // const session = await auth();
+    // console.log(session);
+    // if (!session) {
+    //     redirect("/");
+    // }
+    // Classic version
+    const token = await cookies().get('Authorization')?.value;
+    // throw new Error(token+"<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<")
+    if(!token) {
+        redirect("/");
+    }
+    if(token && !verifyToken(token?.split(' ')[1])) {
         redirect("/");
     }
     return (

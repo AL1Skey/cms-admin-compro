@@ -11,9 +11,12 @@ interface FileWithPreview extends File {
 }
 type UploadSingleFileProps = Partial<{
   [key: string]: any;
-}>
+}>;
 
-const UploadSingleFile = ({edit=false,...props}:UploadSingleFileProps) => {
+const UploadSingleFile = ({
+  edit = false,
+  ...props
+}: UploadSingleFileProps) => {
   const [files, setFiles] = useState<FileWithPreview[]>([]);
 
   const { getRootProps, getInputProps } = useDropzone({
@@ -21,7 +24,7 @@ const UploadSingleFile = ({edit=false,...props}:UploadSingleFileProps) => {
     accept: {
       "image/*": [".png", ".jpg", ".jpeg", ".gif"],
     },
-    
+
     onDrop: (acceptedFiles) => {
       setFiles(acceptedFiles.map((file) => Object.assign(file)));
     },
@@ -44,22 +47,26 @@ const UploadSingleFile = ({edit=false,...props}:UploadSingleFileProps) => {
 
   return (
     <div className={files.length ? "h-[300px] w-full" : ""}>
-      {files.length ? (
-        <div className="w-full h-full relative">
-          <Button
-            type="button"
-            className="absolute top-4 right-4 h-12 w-12 rounded-full bg-default-900 hover:bg-background hover:text-default-900 z-20"
-            onClick={closeTheFile}
-          >
-            <span className="text-xl">
-              <Icon icon="fa6-solid:xmark" />
-            </span>
-          </Button>
-          {img}
-        </div>
-      ) : (
+      <div className={`w-full h-full relative ${files.length ? "" : "hidden"}`}>
+        <Button
+          type="button"
+          className= {`${!edit ? '':'hidden'} absolute top-4 right-4 h-12 w-12 rounded-full bg-default-900 hover:bg-background hover:text-default-900 z-20`}
+          onClick={closeTheFile}
+        >
+          <span className="text-xl">
+            <Icon icon="fa6-solid:xmark" />
+          </span>
+        </Button>
+        {img}
+      </div>
+      <div className={` ${files.length ? "hidden" : ""}`}>
         <div {...getRootProps({ className: "dropzone" })}>
-          <input name="image" {...getInputProps()} disabled={edit}/>
+          <input
+            name="image"
+            type="file"
+            {...getInputProps()}
+            disabled={edit}
+          />
 
           <div className="w-full text-center border-dashed border border-default-200 dark:border-default-300 rounded-md py-[52px] flex items-center flex-col">
             <CloudUpload className="text-default-300 w-10 h-10" />
@@ -72,7 +79,7 @@ const UploadSingleFile = ({edit=false,...props}:UploadSingleFileProps) => {
             </div>
           </div>
         </div>
-      )}
+      </div>
     </div>
   );
 };
