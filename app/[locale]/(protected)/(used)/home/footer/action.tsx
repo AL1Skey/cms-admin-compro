@@ -8,12 +8,16 @@ function getToken() {
 export const action = async (data:FormData) => {
     const token = getToken();
     console.log("ACTION<<<<<<<<<<<<<<<<<<<<<<<<<<")
+    console.log(data)
+    const req:{[key:string]:any} = {}
+    data.forEach((value, key) => req[key] = value)
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/footer/one`, {
         method: "PUT",
         headers: {
+            "Content-Type": "application/json",
             Authorization: `${token}`,
         },
-        body: data,
+        body: JSON.stringify(req),
     }).then((res) => res.json()).catch((err) => {
         console.error(err);
     });
