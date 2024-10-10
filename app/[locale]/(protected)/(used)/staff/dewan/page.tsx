@@ -37,7 +37,7 @@ const Page = () => {
             <Card>
             <CardHeader>
                 <div className="flex justify-between">
-                    <CardTitle>Alumni</CardTitle>
+                    <CardTitle>Dewan Pembimbing</CardTitle>
                     <Button><Link href="dewan/add">Add</Link></Button>
                 </div>
             </CardHeader>

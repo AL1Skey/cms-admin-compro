@@ -1,19 +1,35 @@
 import React from 'react'
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { cookies } from 'next/headers';
+import NotFound from '@/app/[locale]/not-found';
 import Form from '../../form';
-const page = () => {
+const page = async({params}:{params:any}) => {
+  const token = cookies().get('Authorization')?.value;
+  const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/dewan/${params.id}`, {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    }
+  });
   return (
     <div>
-      <Card>
-        <CardHeader>
-            <CardTitle>Banner</CardTitle>
-        </CardHeader>
-        <CardContent>
-            <Form />
-        </CardContent>
-      </Card>
+      <Form data={data} />
     </div>
   )
 }
 
 export default page
+
+export async function generateStaticParams() {
+  const ids: any = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/public/dewan`);
+  if (!ids?.length) {
+    return <NotFound />;
+  }
+  console.log(ids);
+  return ids.map((id: any) => {
+    return {
+      params: {
+        id: id.id,
+      },
+    };
+  });
+}

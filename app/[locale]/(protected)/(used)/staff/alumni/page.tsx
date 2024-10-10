@@ -1,9 +1,9 @@
-"use client"
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import BasicTable from '../../components/basic-table';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import { cookies } from 'next/headers';
 
 const dataset = [
     {
@@ -29,7 +29,17 @@ const dataset = [
     // Add more dummy data here if needed
 ];
 
-const Page = () => {
+const Page = async() => {
+    const token = cookies().get('Authorization')?.value;
+    const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/alumni`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `${token}`,
+        },
+    }).then((res) => res.json()).catch((err) => {
+        console.error(err);
+    });
     return (
         <div>
             <Card>

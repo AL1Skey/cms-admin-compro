@@ -12,13 +12,16 @@ import { Button } from "@/components/ui/button";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import DeleteConfirmationDialog from "@/components/delete-confirmation-dialog";
-import { useRouter } from '@/components/navigation';
+import { useRouter } from "@/components/navigation";
 import { useState } from "react";
-const BasicTable: React.FC<Partial<{
-  columns: any[];
-  tableData: any[];
-  action(id: string | null): Promise<void>|null;
-}>> = ({ columns = [], tableData = [], action=null }) => {
+import { acceptRequest, rejectRequest } from "../action/action";
+const BasicTable: React.FC<
+  Partial<{
+    columns: any[];
+    tableData: any[];
+    action(id: string | null): Promise<void> | null;
+  }>
+> = ({ columns = [], tableData = [], action = null }) => {
   const pathname = usePathname();
   const router = useRouter();
   const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false);
@@ -32,9 +35,7 @@ const BasicTable: React.FC<Partial<{
           setDeleteModalOpen(false);
         }}
         onConfirm={() => {
-          if (action){
-          action(actId);
-          }
+          rejectRequest(actId);
           router.refresh();
         }}
         defaultToast={false}
@@ -51,7 +52,7 @@ const BasicTable: React.FC<Partial<{
           </TableRow>
         </TableHeader>
         <TableBody>
-          {tableData?.map((row, index1) => (
+          {tableData.length && tableData?.map((row, index1) => (
             <TableRow key={`table-data-${index1}`}>
               {Object.keys(row).map((key, index) => (
                 <>
@@ -79,29 +80,21 @@ const BasicTable: React.FC<Partial<{
               ))}
               <TableCell>
                 <div className="flex items-center gap-4">
-                  <Link
-                    href={pathname + `/${row && row["id"] ? row["id"] : ""}`}
+                  <Button
+                    onClick={() => {
+                      setActId(row["id"]);
+                      acceptRequest(row["id"]);
+                    }}
                   >
-                    <Button color="secondary">
-                      <Eye className="w-4 h-4" /> View
-                    </Button>
-                  </Link>
-                  <Link
-                    href={
-                      pathname + `/update/${row && row["id"] ? row["id"] : ""}`
-                    }
-                  >
-                    <Button>
-                      <SquarePen className="w-3 h-3" /> Edit
-                    </Button>
-                  </Link>
+                    <Trash2 className="w-4 h-4" /> Reject
+                  </Button>
                   <Button
                     onClick={() => {
                       setActId(row["id"]);
                       setDeleteModalOpen(true);
                     }}
                   >
-                    <Trash2 className="w-4 h-4" /> Delete
+                    <Trash2 className="w-4 h-4" /> Reject
                   </Button>
                 </div>
               </TableCell>

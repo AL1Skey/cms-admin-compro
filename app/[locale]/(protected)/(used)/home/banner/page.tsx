@@ -6,7 +6,12 @@ import Link from 'next/link';
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import { deleteAct } from './action/action';
-
+const column = [
+    "No",
+    "Image",
+    "Title",
+    "Description",
+]
 const Page = async() => {
     
     const token = await cookies().get('Authorization')?.value;
@@ -27,7 +32,7 @@ const Page = async() => {
                 </div>
             </CardHeader>
             <CardContent>
-            {data?.length > 0 && <BasicTable columns={Object.keys(data[0])} tableData={data} action={deleteAct} />}
+            {data?.length > 0 && <BasicTable columns={column} tableData={data} action={deleteAct} />}
             </CardContent>
           </Card>
             
