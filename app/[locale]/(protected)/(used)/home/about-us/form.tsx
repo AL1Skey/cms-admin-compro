@@ -52,6 +52,7 @@ const Form = ({ data }: PageProps) => {
                 <CardContent>
                     <form action={(e:FormData)=>{
                         action(e);
+                        setNotEdit(true);
                         router.refresh();
                     }}>
                         <div>
