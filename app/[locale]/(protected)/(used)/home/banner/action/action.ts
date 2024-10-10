@@ -26,7 +26,9 @@ export const add = async(data:FormData)=>{
     return response;
 }
 
-export const update = async(data:FormData,id:string)=>{
+export const update = async(data:FormData)=>{
+    const id = data.get('id');
+    console.log(data,"ASDASDPPPPPPPPPPPPPPPPPPPPPPPPP");
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/header/${id}`,{
         method: 'PUT',
         headers: {

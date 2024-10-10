@@ -23,7 +23,7 @@ const Page = async() => {
             <CardHeader>
                 <div className="flex justify-between">
                     <CardTitle>Banner</CardTitle>
-                    <Button><Link href="banner/add">Add</Link></Button>
+                    <Link href="banner/add"><Button>Add</Button></Link>
                 </div>
             </CardHeader>
             <CardContent>

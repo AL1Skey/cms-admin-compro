@@ -5,6 +5,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import UploadSingleFile from '../../components/forms/upload-single-file';
+import { useRouter } from '@/components/navigation';
+import { action } from './action';
 type PageProps = Partial<{
     data: {
         image: string|undefined;
@@ -16,6 +18,7 @@ type PageProps = Partial<{
 }>;
 
 const Form = ({ data }: PageProps) => {
+    const router = useRouter();
     const [image, setImage] = useState(data?.image || '');
     const [title, setTitle] = useState(data?.title || '');
     const [description, setDescription] = useState(data?.description || '');
@@ -25,10 +28,6 @@ const Form = ({ data }: PageProps) => {
 
     const handleEditChange = () => {
         setNotEdit(!notEdit);
-    };
-
-    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setImage(e.target.value);
     };
 
     const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -47,19 +46,17 @@ const Form = ({ data }: PageProps) => {
         setMisi(e.target.value);
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        // Handle form submission logic here
-    };
-
     return (
         <div>
             <Card>
                 <CardContent>
-                    <form onSubmit={handleSubmit}>
+                    <form action={(e:FormData)=>{
+                        action(e);
+                        router.refresh();
+                    }}>
                         <div>
                             <Label htmlFor="image">Image:</Label>
-                            <UploadSingleFile edit={notEdit}/>
+                            <UploadSingleFile image={image} edit={notEdit}/>
                         </div>
                         <div>
                             <Label htmlFor="title">Title:</Label>

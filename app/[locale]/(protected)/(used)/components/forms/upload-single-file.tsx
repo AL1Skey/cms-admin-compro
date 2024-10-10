@@ -15,10 +15,11 @@ type UploadSingleFileProps = Partial<{
 
 const UploadSingleFile = ({
   edit = false,
+  image="",
   ...props
 }: UploadSingleFileProps) => {
   const [files, setFiles] = useState<FileWithPreview[]>([]);
-
+  const [imageUrl, setImageUrl] = useState(image);
   const { getRootProps, getInputProps } = useDropzone({
     multiple: false,
     accept: {
@@ -27,6 +28,7 @@ const UploadSingleFile = ({
 
     onDrop: (acceptedFiles) => {
       setFiles(acceptedFiles.map((file) => Object.assign(file)));
+      console.log(acceptedFiles);
     },
   });
 
@@ -41,13 +43,25 @@ const UploadSingleFile = ({
     />
   ));
 
+  const imgUrlPrev = (
+    <Image
+      alt={image}
+      width={1000}
+      height={300}
+      layout="fixed"
+      className="w-full h-full object-contain rounded-md"
+      src={image}
+    />
+  )
+
   const closeTheFile = () => {
     setFiles([]);
+    setImageUrl("");
   };
 
   return (
-    <div className={files.length ? "h-[300px] w-full" : ""}>
-      <div className={`w-full h-full relative ${files.length ? "" : "hidden"}`}>
+    <div className={files.length ? "h-[300px] w-full" : "h-[300px] w-full"}>
+      <div className={`w-full h-full relative ${files.length || imageUrl!=="" ? "" : "hidden"}`}>
         <Button
           type="button"
           className= {`${!edit ? '':'hidden'} absolute top-4 right-4 h-12 w-12 rounded-full bg-default-900 hover:bg-background hover:text-default-900 z-20`}
@@ -57,9 +71,9 @@ const UploadSingleFile = ({
             <Icon icon="fa6-solid:xmark" />
           </span>
         </Button>
-        {img}
+        {imageUrl !== "" ? imgUrlPrev : img}
       </div>
-      <div className={` ${files.length ? "hidden" : ""}`}>
+      {imageUrl===""&& <div className={` ${files.length ? "hidden" : ""}`}>
         <div {...getRootProps({ className: "dropzone" })}>
           <input
             name="image"
@@ -79,7 +93,7 @@ const UploadSingleFile = ({
             </div>
           </div>
         </div>
-      </div>
+      </div>}
     </div>
   );
 };
