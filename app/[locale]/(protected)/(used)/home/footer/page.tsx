@@ -4,6 +4,7 @@ import Form from "./form";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { SquarePen } from "lucide-react";
+import { cookies } from "next/headers";
 
 const dummy = {
   "address": "123 Main St, Anytown, USA 12345",
@@ -15,8 +16,13 @@ const dummy = {
   "twitter": "https://www.twitter.com/example"
 };
 
-const page = () => {
-
+const page = async() => {
+  const token = cookies().get("Authorization")?.value;
+  const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/footer/one`, {
+    headers: {
+      "Authorization": `${token}`
+    }
+  }).then(res => res.json()).then(data => data).catch(err => err);
   return (
     <div>
       <Card>
@@ -26,7 +32,7 @@ const page = () => {
           </div>
         </CardHeader>
         <CardContent>
-          <Form data={dummy}  />
+          <Form data={data}  />
           
         </CardContent>
       </Card>

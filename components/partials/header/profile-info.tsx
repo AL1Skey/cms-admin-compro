@@ -17,10 +17,13 @@ import { signOut, auth } from "@/lib/auth";
 import Image from "next/image";
 import { Link } from '@/i18n/routing';
 import { Button } from "@/components/ui/button";
+import { cookies } from "next/headers";
+import { redirect } from "@/components/navigation";
 
 const ProfileInfo = async () => {
   const session = await auth();
 
+  
 
 
   return (
@@ -187,7 +190,12 @@ const ProfileInfo = async () => {
               <form
                 action={async () => {
                   "use server";
-                  await signOut();
+                  // await signOut();
+                  function handleLogout() {
+                    cookies().delete('Authorization');
+                    redirect("/");
+                  }
+                  handleLogout();
                 }}
               >
                 <button type="submit" className=" w-full  flex  items-center gap-2" >

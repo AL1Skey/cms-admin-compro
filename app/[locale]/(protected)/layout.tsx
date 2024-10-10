@@ -22,8 +22,17 @@ const layout = async ({ children }: { children: React.ReactNode }) => {
     if(!token) {
         redirect("/");
     }
-    if(token && !verifyToken(token?.split(' ')[1])) {
-        redirect("/");
+    if(token) {
+        try{
+       const verified:any = verifyToken(token.split(' ')[1]);
+         if(!verified.id) {
+            cookies().delete('Authorization');
+            redirect("/");
+         }}
+         catch(e) {
+            cookies().delete('Authorization');
+            redirect("/");
+         }
     }
     return (
         <LayoutProvider >

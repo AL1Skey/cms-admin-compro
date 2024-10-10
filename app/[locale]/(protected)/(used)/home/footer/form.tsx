@@ -4,13 +4,16 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
+import { action } from './action';
+import { useRouter } from '@/components/navigation';
 type PageProps = Partial<{
-    
     data:{[key:string]:any};
 }>;
 
 const Form = ({ data={} }:PageProps) => {
+    const router = useRouter();
     const [address, setAddress] = useState(data?.address || '');
+    const [addressUrl, setAddressUrl] = useState(data?.addressUrl || '');
     const [phone, setPhone] = useState(data?.phone || '');
     const [email, setEmail] = useState(data?.email || '');
     const [facebook, setFacebook] = useState(data?.facebook || '');
@@ -25,6 +28,10 @@ const Form = ({ data={} }:PageProps) => {
 
     const handleAddressChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setAddress(e.target.value);
+    };
+
+    const handleAddressUrlChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setAddressUrl(e.target.value);
     };
 
     const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -56,10 +63,18 @@ const Form = ({ data={} }:PageProps) => {
         <div>
             <Card>
             <CardContent>
-            <form onSubmit={handleSubmit}>
+            <form action={(e:FormData)=>{
+                action(e);
+                setNotEdit(true);
+                router.refresh();
+            }}>
                 <div>
                     <Label htmlFor="address">Address:</Label>
                     <Input name='address' type="text" id="address" value={address} onChange={handleAddressChange} readOnly={notEdit} />
+                </div>
+                <div>
+                    <Label htmlFor="addressUrl">Address URL:</Label>
+                    <Input name='addressUrl' type="text" id="addressUrl" value={addressUrl} onChange={handleAddressUrlChange} readOnly={notEdit} />
                 </div>
                 <div>
                     <Label htmlFor="phone">Phone:</Label>

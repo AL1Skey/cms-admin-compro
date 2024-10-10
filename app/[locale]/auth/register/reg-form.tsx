@@ -13,6 +13,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { registerAct } from "./action";
+import { toast } from "sonner";
+import { useRouter } from "@/components/navigation";
 
 type Inputs = {
   name: string;
@@ -29,10 +31,12 @@ const RegForm = () => {
     watch,
     formState: { errors },
   } = useForm<Inputs>();
-
+  const router = useRouter();
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     console.log(data);
     registerAct(data);
+    toast.success("Account created successfully");
+    router.push("/auth/login");
   };
 
   return (
@@ -78,13 +82,13 @@ const RegForm = () => {
           render={({ field }) => (
             <Select onValueChange={field.onChange} value={field.value}>
               <SelectTrigger>
-                <SelectValue placeholder="Select a fruit" />
+                <SelectValue placeholder="Select a Role" />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
                   <SelectLabel>Role</SelectLabel>
-                  <SelectItem value="superAdmin">Super Admin</SelectItem>
-                  <SelectItem value="admin">Admin</SelectItem>
+                  <SelectItem value="Super Admin">Super Admin</SelectItem>
+                  <SelectItem value="Admin">Admin</SelectItem>
                 </SelectGroup>
               </SelectContent>
             </Select>
