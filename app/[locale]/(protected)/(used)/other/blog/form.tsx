@@ -15,24 +15,25 @@ import {
     SelectTrigger,
     SelectValue,
   } from "@/components/ui/select";
-  
-import { useForm, SubmitHandler, Controller } from "react-hook-form";
+import { useRouter } from "@/components/navigation";
+import {toast} from 'sonner';
 
 type PageProps = Partial<{
   data: any;
   notEdit: boolean;
+  action(...args:any): Promise<any>;
 }>;
 
-const Form = ({ data, notEdit = false }: PageProps) => {
+const Form = ({ data, notEdit = false,action }: PageProps) => {
   const [formData, setFormData] = useState({
     image: data?.image || "",
     title: data?.title || "",
     author: data?.author || "",
     description: data?.description || "",
     category: data?.category || "",
-    createdAt: data?.createdAt || "",
+    createAt: data?.createAt || "",
   });
-
+  const router = useRouter();
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prevState) => ({
@@ -50,10 +51,22 @@ const Form = ({ data, notEdit = false }: PageProps) => {
     <div>
       <Card>
         <CardContent>
-          <form onSubmit={handleSubmit}>
+          <form action={(e:FormData)=>{
+            if(action){
+              action(e)
+            }
+            toast.success("Data has been saved")
+            router.back()
+          }
+          }>
+            {data?.id && <input type="hidden" name="id" value={data?.id} />}
             <div>
               <Label htmlFor="image">Image:</Label>
-              <UploadSingleFile />
+              {!data.image && <UploadSingleFile />}
+              {data?.image && notEdit && <img src={data?.image} alt="Image" />}
+              {data?.image && !notEdit && (
+                <UploadSingleFile image={data?.image} />
+              )}
             </div>
             <div>
               <Label htmlFor="title">Title:</Label>
@@ -86,7 +99,12 @@ const Form = ({ data, notEdit = false }: PageProps) => {
             </div>
             <div className="space-y-2">
               <Label htmlFor="role">Category</Label>
-                <Select onValueChange={handleInputChange} value={field.value}>
+                <Select onValueChange={(e)=>{
+                  setFormData((prevState) => ({
+                    ...prevState,
+                    ["category"]: e,
+                  }))
+                }} value={data?.category}>
                     <SelectTrigger>
                       <SelectValue placeholder="Select a Category" />
                     </SelectTrigger>
@@ -98,9 +116,6 @@ const Form = ({ data, notEdit = false }: PageProps) => {
                       </SelectGroup>
                     </SelectContent>
                 </Select>
-                
-                rules={{ required: true }}
-              />
             </div>
             <div>
               <Label htmlFor="createAt">createAt:</Label>
@@ -108,7 +123,7 @@ const Form = ({ data, notEdit = false }: PageProps) => {
                 name="createAt"
                 type="date"
                 id="createAt"
-                value={formData.createdAt}
+                value={formData.createAt}
                 onChange={handleInputChange}
               />
             </div>

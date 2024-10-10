@@ -1,36 +1,36 @@
 import React from 'react'
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import Form from '../../form';
 import { cookies } from 'next/headers';
 import NotFound from '@/app/[locale]/not-found';
-import getAlumni from '../../lib/getAlumni';
-const page = async() => {
+import Form from '../../form';
+import { update } from '../../action/action';
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+const page = async({params}:{params:any}) => {
   const token = cookies().get('Authorization')?.value;
-  const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/header`,{
-      method: 'GET',
-      headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `${token}`
-      }
-  }).then(res => res.json());
+  const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/alumni/${params.id}`, {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    }
+  });
   return (
     <div>
       <Card>
         <CardHeader>
-            <CardTitle>Banner</CardTitle>
+            <CardTitle>Alumni</CardTitle>
         </CardHeader>
         <CardContent>
-            <Form data={data} />
+        <Form data={{ ...data, id:params.id }} action={update} />
         </CardContent>
       </Card>
     </div>
   )
 }
 
+
 export default page
 
 export async function generateStaticParams() {
-  const ids: any = await getAlumni();
+  const ids: any = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/public/alumni`);
   if (!ids?.length) {
     return <NotFound />;
   }

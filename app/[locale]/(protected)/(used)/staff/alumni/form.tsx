@@ -5,15 +5,18 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
+import { toast } from 'sonner';
+import { useRouter } from '@/components/navigation';
 
 type PageProps = Partial<{
     data: any;
     notEdit: boolean;
+    action: (...args: any) => Promise<any>;
 }>;
 
-const Form = ({data,notEdit=false}:PageProps) => {
+const Form = ({data,notEdit=false,action}:PageProps) => {
 
-
+    const router = useRouter();
     const [formData, setFormData] = useState({
         name: data?.name || '',
         email: data?.email || '',
@@ -41,7 +44,16 @@ const Form = ({data,notEdit=false}:PageProps) => {
         <div>
             <Card>
                 <CardContent>
-                    <form onSubmit={handleSubmit}>
+                    <form action={
+                        (e: FormData) => {
+                            if (action) {
+                                action(e)
+                            }
+                            toast.success("Data has been saved")
+                            router.back()
+                        }   
+                    }>
+                        {data?.id && <input type="hidden" name="id" value={data?.id} />}
                         <div>
                             <Label htmlFor="name">Name:</Label>
                             <Input name='name' type="text" id="name" value={formData.name} onChange={handleInputChange} readOnly={notEdit} />

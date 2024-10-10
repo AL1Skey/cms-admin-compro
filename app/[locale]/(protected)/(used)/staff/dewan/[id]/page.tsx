@@ -2,6 +2,8 @@ import React from 'react'
 import { cookies } from 'next/headers';
 import NotFound from '@/app/[locale]/not-found';
 import Form from '../form';
+import { update } from '../action/action';
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 const page = async({params}:{params:any}) => {
   const token = cookies().get('Authorization')?.value;
   const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/dewan/${params.id}`, {
@@ -12,10 +14,18 @@ const page = async({params}:{params:any}) => {
   });
   return (
     <div>
-      <Form data={data} notEdit={true} />
+      <Card>
+        <CardHeader>
+            <CardTitle>Dewan Pembina</CardTitle>
+        </CardHeader>
+        <CardContent>
+        <Form data={{ ...data }} notEdit={true} />
+        </CardContent>
+      </Card>
     </div>
   )
 }
+
 
 export default page
 
