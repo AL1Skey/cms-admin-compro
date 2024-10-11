@@ -8,8 +8,10 @@ interface RegisterData {
 }
 export const registerAct = async (data: RegisterData) => {
   try {
+    // throw new Error(JSON.parse(data.role))
     const url = `${process.env.NEXT_PUBLIC_API_URL}/register`;
-    data.role = parseJSON(data.role);
+    console.log(data.role);
+    data.role = JSON.parse(data.role);
     const response = await fetch(url,{
         method: 'POST',
         headers: {

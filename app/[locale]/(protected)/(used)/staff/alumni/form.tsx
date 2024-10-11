@@ -32,7 +32,7 @@ const Form = ({ data, notEdit = false, action }: PageProps) => {
     jobs: data?.jobs || "",
     angkatan: data?.angkatan || "",
     jurusan: data?.jurusan || "",
-    approval: data?.approval || "0",
+    approval: data?.approval ? "1" : "0",
   });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -54,14 +54,14 @@ const Form = ({ data, notEdit = false, action }: PageProps) => {
         <CardContent>
           <form
             action={(e: FormData) => {
-              async function runAct() {
+              async function runAct(e: FormData) {
               if (action) {
                await action(e);
               }
               toast.success("Data has been saved");
               router.back();
             }
-            runAct();
+            runAct(e);
             }}
 
             encType="multipart/form-data"
@@ -144,11 +144,12 @@ const Form = ({ data, notEdit = false, action }: PageProps) => {
             <div>
               <Label htmlFor="approval">Approval:</Label>
               <Select name="approval" onValueChange={(e)=>{
+                console.log(e)
                   setFormData((prevState) => ({
                     ...prevState,
                     ["approval"]: e,
                   }))
-                }} value={`${data?.approval ? '1':'0'}`} disabled={notEdit}>
+                }} value={formData.approval} disabled={notEdit}>
                     <SelectTrigger>
                       <SelectValue placeholder="Approval" />
                     </SelectTrigger>

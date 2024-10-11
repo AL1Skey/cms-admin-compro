@@ -29,9 +29,14 @@ export const add = async(data:FormData)=>{
 export const update = async(data:FormData)=>{
     const id = data.get('id');
     console.log(data,"ASDASDPPPPPPPPPPPPPPPPPPPPPPPPP");
+    const req:{[key:string]:any} = {}
+    data.forEach((value,key)=>{
+        req[key] = value;
+    });
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/dewan/${id}`,{
         method: 'PUT',
         headers: {
+            'Content-Type':'application/x-www-form-urlencoded',
             'Authorization': `${token()}`
         },
         body: data

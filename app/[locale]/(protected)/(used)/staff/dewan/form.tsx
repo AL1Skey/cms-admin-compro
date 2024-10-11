@@ -47,14 +47,14 @@ const Form = ({ data, notEdit = false,action }: PageProps) => {
       <Card>
         <CardContent>
           <form action={(e:FormData)=>{
-            async function runAct(){
+            async function runAct(e: FormData) {
               if(action){
                 await action(e)
               }
               toast.success("Data has been saved")
               router.back()
             }
-            runAct()
+            runAct(e)
           }}>
             {data?.id && <input type="hidden" name="id" value={data?.id} />}
             <div>
@@ -141,7 +141,7 @@ const Form = ({ data, notEdit = false,action }: PageProps) => {
                 name="instagram"
                 type="text"
                 id="instagram"
-                checked={formData.instagram}
+                value={formData.instagram}
                 onChange={handleInputChange}
                 readOnly={notEdit}
               />
@@ -152,7 +152,7 @@ const Form = ({ data, notEdit = false,action }: PageProps) => {
                 name="twitter"
                 type="text"
                 id="twitter"
-                checked={formData.twitter}
+                value={formData.twitter}
                 onChange={handleInputChange}
                 readOnly={notEdit}
               />
