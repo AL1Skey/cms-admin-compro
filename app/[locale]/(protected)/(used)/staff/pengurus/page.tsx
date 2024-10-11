@@ -1,9 +1,9 @@
-"use client"
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import BasicTable from '../../components/basic-table';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import { cookies } from 'next/headers';
 
 
 const dataset = [
@@ -30,8 +30,30 @@ const dataset = [
         twitter: "jane.smith"
     }
 ];
-const Page = () => {
-    
+
+const columns = [
+    "No",
+  "image",
+  "name",
+  "position",
+  "description",
+  "phone",
+  "email",
+  "facebook",
+  "instagram",
+  "twitter",
+];
+const Page = async() => {
+    const token = cookies().get('Authorization')?.value;
+    const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/pengurus`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `${token}`
+        }
+    }).then(res => res.json()).catch(err => {
+        console.error(err);
+    })
     return (
         <div>
             <Card>
@@ -42,7 +64,7 @@ const Page = () => {
                 </div>
             </CardHeader>
             <CardContent>
-            <BasicTable columns={Object.keys(dataset[0])} tableData={dataset} />
+            <BasicTable columns={columns} tableData={data} />
             </CardContent>
           </Card>
             

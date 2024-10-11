@@ -54,11 +54,14 @@ const Form = ({ data, notEdit = false, action }: PageProps) => {
         <CardContent>
           <form
             action={(e: FormData) => {
+              async function runAct() {
               if (action) {
-                action(e);
+               await action(e);
               }
               toast.success("Data has been saved");
               router.back();
+            }
+            runAct();
             }}
 
             encType="multipart/form-data"
