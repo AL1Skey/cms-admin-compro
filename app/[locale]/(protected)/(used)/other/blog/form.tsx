@@ -86,6 +86,7 @@ const Form = ({ data, notEdit = false,action }: PageProps) => {
                 id="author"
                 value={formData.author}
                 onChange={handleInputChange}
+                readOnly={true}
               />
             </div>
 
@@ -123,7 +124,7 @@ const Form = ({ data, notEdit = false,action }: PageProps) => {
                 name="createAt"
                 type="date"
                 id="createAt"
-                value={formData.createAt}
+                value={typeof formData.createAt === "string" ? new Date(formData.createAt).toISOString().substr(0, 10) : ""}
                 onChange={handleInputChange}
               />
             </div>

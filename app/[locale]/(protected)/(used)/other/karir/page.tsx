@@ -37,6 +37,7 @@ const Page = async() => {
     }).then((res) => res.json()).catch((err) => {
         console.error(err);
     });
+    // throw new Error(JSON.stringify(data));
     return (
         <div>
             <Card>
