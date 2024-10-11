@@ -8,7 +8,10 @@ export const generateToken = (payload: any) => {
   return jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1d' });
 };
 
-export const verifyToken = (token: string) => {
+export const verifyToken = (token: any) => {
+  if(!token) {
+    return false;
+  }
   if (!process.env.JWT_SECRET) {
     throw new Error('JWT secret is not defined');
   }

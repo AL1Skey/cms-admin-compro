@@ -12,22 +12,19 @@ import { Button } from "@/components/ui/button";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import DeleteConfirmationDialog from "@/components/delete-confirmation-dialog";
-import { useRouter } from "@/components/navigation";
+import { useRouter } from '@/components/navigation';
 import { useState } from "react";
-import { acceptRequest, rejectRequest } from "../action/action";
-const BasicTable: React.FC<
-  Partial<{
-    columns: any[];
-    tableData: any[];
-    action(id: string | null): Promise<void> | null;
-  }>
-> = ({ columns = [], tableData = [], action = null }) => {
+const BasicTable: React.FC<Partial<{
+  columns: any[];
+  tableData: any[]|undefined|null;
+  action(id: string | null): Promise<void>|null;
+}>> = ({ columns = [], tableData = [], action=null }) => {
   const pathname = usePathname();
   const router = useRouter();
   const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false);
   const [actId, setActId] = useState<string | null>(null);
   return (
-    <>
+    <div >
       <DeleteConfirmationDialog
         open={deleteModalOpen}
         onClose={() => {
@@ -35,8 +32,13 @@ const BasicTable: React.FC<
           setDeleteModalOpen(false);
         }}
         onConfirm={() => {
-          rejectRequest(actId);
+          async function runAct(){
+          if (action){
+          await action(actId);
+          }
           router.refresh();
+          }
+          runAct();
         }}
         defaultToast={false}
       />
@@ -44,15 +46,15 @@ const BasicTable: React.FC<
         <TableHeader>
           <TableRow>
             {columns?.map((column, index) => (
-              <TableHead key={`basic-table-column-${index}`}>
+              <TableHead key={`basic-table-column-${index}`} className="text-center">
                 {column}
               </TableHead>
             ))}
-            <TableHead>action</TableHead>
+            <TableHead className="text-center">action</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {tableData.length && tableData?.map((row, index1) => (
+          {tableData?.map((row, index1) => (
             <TableRow key={`table-data-${index1}`}>
               {Object.keys(row).map((key, index) => (
                 <>
@@ -65,13 +67,18 @@ const BasicTable: React.FC<
                       />
                     </TableCell>
                   )}
+                  { key === "approval" && (
+                    <TableCell key={`table-data-cell-${index}`}>
+                      {row[key] ? "Approved" : "Not Approved"}
+                    </TableCell>
+                  )}
                   {key === "id" && (
                     <TableCell key={`table-data-cell-${index}`}>
                       {index1 + 1}
                     </TableCell>
                   )}
 
-                  {!["image", "id"].includes(key) && (
+                  {!["image", "id","createdAt","updatedAt","approval"].includes(key) && (
                     <TableCell key={`table-data-cell-${index}`}>
                       {row[key]}
                     </TableCell>
@@ -80,21 +87,29 @@ const BasicTable: React.FC<
               ))}
               <TableCell>
                 <div className="flex items-center gap-4">
-                  <Button
-                    onClick={() => {
-                      setActId(row["id"]);
-                      acceptRequest(row["id"]);
-                    }}
+                  <Link
+                    href={pathname + `/${row && row["id"] ? row["id"] : ""}`}
                   >
-                    <SquarePen className="w-4 h-4" /> Accept
-                  </Button>
+                    <Button color="secondary">
+                      <Eye className="w-4 h-4" /> Up to About Us
+                    </Button>
+                  </Link>
+                  <Link
+                    href={
+                      pathname + `/update/${row && row["id"] ? row["id"] : ""}`
+                    }
+                  >
+                    <Button>
+                      <SquarePen className="w-3 h-3" /> Edit
+                    </Button>
+                  </Link>
                   <Button
                     onClick={() => {
                       setActId(row["id"]);
                       setDeleteModalOpen(true);
                     }}
                   >
-                    <Trash2 className="w-4 h-4" /> Reject
+                    <Trash2 className="w-4 h-4" /> Delete
                   </Button>
                 </div>
               </TableCell>
@@ -102,7 +117,7 @@ const BasicTable: React.FC<
           ))}
         </TableBody>
       </Table>
-    </>
+    </div>
   );
 };
 

@@ -19,11 +19,16 @@ import { Link } from '@/i18n/routing';
 import { Button } from "@/components/ui/button";
 import { cookies } from "next/headers";
 import { redirect } from "@/components/navigation";
+import { verifyToken } from "@/lib/jwt";
 
 const ProfileInfo = async () => {
-  const session = await auth();
-
-  
+  const user = verifyToken(cookies().get('Authorization')?.value?.split(' ')[1]);
+  if (!user) {
+    redirect("/");
+  }
+  const session:{[key:string]:any} = {
+    user: user
+  }
 
 
   return (

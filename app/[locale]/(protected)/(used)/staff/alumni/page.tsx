@@ -34,7 +34,6 @@ const columns = [
     "No",
     "Name",
     "Email",
-    "Image",
     "Phone",
     "Pekerjaan",
     "Angkatan",

@@ -52,7 +52,7 @@ const Form = ({ data, notEdit = false,action }: PageProps) => {
             {data?.id && <input type="hidden" name="id" value={data?.id} />}
             <div>
               <Label htmlFor="image">Image:</Label>
-              {!data.image && <UploadSingleFile />}
+              {(!data?.image || !data) && <UploadSingleFile />}
               {data?.image && notEdit && <img src={data?.image} alt="Image" />}
               {data?.image && !notEdit && (
                 <UploadSingleFile image={data?.image} />
@@ -90,7 +90,7 @@ const Form = ({ data, notEdit = false,action }: PageProps) => {
               />
             </div>
             <div>
-              <Label htmlFor="end_date">Expires in:</Label>
+              <Label htmlFor="end_date">Expired:</Label>
               <Input
                 name="end_date"
                 type="date"
