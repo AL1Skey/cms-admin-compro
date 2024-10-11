@@ -87,8 +87,8 @@ const RegForm = () => {
               <SelectContent>
                 <SelectGroup>
                   <SelectLabel>Role</SelectLabel>
-                  <SelectItem value="Super Admin">Super Admin</SelectItem>
-                  <SelectItem value="Admin">Admin</SelectItem>
+                  <SelectItem value="{'Super Admin':10}">Super Admin</SelectItem>
+                  <SelectItem value="{'Admin':9}">Admin</SelectItem>
                 </SelectGroup>
               </SelectContent>
             </Select>
