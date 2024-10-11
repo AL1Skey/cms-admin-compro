@@ -9,9 +9,9 @@ const page = async({params}:{params:any}) => {
   const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/alumni/${params.id}`, {
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
+      'Authorization': `${token}`
     }
-  });
+  }).then((res) => res.json());
   return (
     <div>
       <Card>
@@ -30,7 +30,8 @@ const page = async({params}:{params:any}) => {
 export default page
 
 export async function generateStaticParams() {
-  const ids: any = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/public/alumni`);
+  const ids: any = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/public/alumni`).then((res) => res.json());
+  console.log(ids);
   if (!ids?.length) {
     return <NotFound />;
   }

@@ -16,7 +16,7 @@ import { useRouter } from '@/components/navigation';
 import { useState } from "react";
 const BasicTable: React.FC<Partial<{
   columns: any[];
-  tableData: any[];
+  tableData: any[]|undefined|null;
   action(id: string | null): Promise<void>|null;
 }>> = ({ columns = [], tableData = [], action=null }) => {
   const pathname = usePathname();
@@ -24,7 +24,7 @@ const BasicTable: React.FC<Partial<{
   const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false);
   const [actId, setActId] = useState<string | null>(null);
   return (
-    <>
+    <div >
       <DeleteConfirmationDialog
         open={deleteModalOpen}
         onClose={() => {
@@ -32,10 +32,13 @@ const BasicTable: React.FC<Partial<{
           setDeleteModalOpen(false);
         }}
         onConfirm={() => {
+          async function runAct(){
           if (action){
-          action(actId);
+          await action(actId);
           }
           router.refresh();
+          }
+          runAct();
         }}
         defaultToast={false}
       />
@@ -43,11 +46,11 @@ const BasicTable: React.FC<Partial<{
         <TableHeader>
           <TableRow>
             {columns?.map((column, index) => (
-              <TableHead key={`basic-table-column-${index}`}>
+              <TableHead key={`basic-table-column-${index}`} className="text-center">
                 {column}
               </TableHead>
             ))}
-            <TableHead>action</TableHead>
+            <TableHead className="text-center">action</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -64,13 +67,18 @@ const BasicTable: React.FC<Partial<{
                       />
                     </TableCell>
                   )}
+                  { key === "approval" && (
+                    <TableCell key={`table-data-cell-${index}`}>
+                      {row[key] ? "Approved" : "Not Approved"}
+                    </TableCell>
+                  )}
                   {key === "id" && (
                     <TableCell key={`table-data-cell-${index}`}>
                       {index1 + 1}
                     </TableCell>
                   )}
 
-                  {!["image", "id"].includes(key) && (
+                  {!["image", "id","createdAt","updatedAt","approval"].includes(key) && (
                     <TableCell key={`table-data-cell-${index}`}>
                       {row[key]}
                     </TableCell>
@@ -109,7 +117,7 @@ const BasicTable: React.FC<Partial<{
           ))}
         </TableBody>
       </Table>
-    </>
+    </div>
   );
 };
 

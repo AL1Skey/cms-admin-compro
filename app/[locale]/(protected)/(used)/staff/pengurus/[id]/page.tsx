@@ -3,19 +3,24 @@ import { cookies } from 'next/headers';
 import NotFound from '@/app/[locale]/not-found';
 import Form from '../form';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
 const page = async({params}:{params:any}) => {
   const token = cookies().get('Authorization')?.value;
   const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/pengurus/${params.id}`, {
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
+      'Authorization': `${token}`
     }
-  });
+  }).then((res) => res.json());
   return (
     <div>
       <Card>
         <CardHeader>
             <CardTitle>Tim Kepengurusan</CardTitle>
+            <Link href="/en/staff/pengurus">
+              <Button>Go Back</Button>
+            </Link>
         </CardHeader>
         <CardContent>
         <Form data={{ ...data }} notEdit={true} />
@@ -29,7 +34,7 @@ const page = async({params}:{params:any}) => {
 export default page
 
 export async function generateStaticParams() {
-  const ids: any = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/public/pengurus`);
+  const ids: any = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/public/pengurus`).then((res) => res.json());
   if (!ids?.length) {
     return <NotFound />;
   }

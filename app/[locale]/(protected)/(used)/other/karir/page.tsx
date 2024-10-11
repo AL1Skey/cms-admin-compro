@@ -12,12 +12,14 @@ const dataset = [
         createAt: new Date().toISOString(),
         category: "Category 1",
         author: "Author 1",
+        end_date: new Date().toISOString(),
         description: "Description 1"
     },
     {
         image: "image-url-2",
         title: "Title 2",
         createAt: new Date().toISOString(),
+        end_date: new Date().toISOString(),
         category: "Category 2",
         author: "Author 2",
         description: "Description 2"

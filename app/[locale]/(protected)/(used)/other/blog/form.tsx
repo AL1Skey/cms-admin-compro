@@ -98,8 +98,8 @@ const Form = ({ data, notEdit = false,action }: PageProps) => {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="role">Category</Label>
-                <Select onValueChange={(e)=>{
+              <Label htmlFor="category">Category</Label>
+                <Select name="category" onValueChange={(e)=>{
                   setFormData((prevState) => ({
                     ...prevState,
                     ["category"]: e,
@@ -129,7 +129,7 @@ const Form = ({ data, notEdit = false,action }: PageProps) => {
             </div>
             
             <div style={{ marginTop: "1rem" }} />
-            <Button type="submit">Submit</Button>
+            {!notEdit && <Button type="submit">Submit</Button>}
           </form>
         </CardContent>
       </Card>

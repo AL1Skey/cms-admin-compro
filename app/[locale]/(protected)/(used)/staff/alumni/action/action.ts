@@ -45,14 +45,16 @@ export const update = async(data:FormData)=>{
 }
 
 export const deleteAct = async(id:string)=>{
+    console.log(id);
+    console.log(`${process.env.NEXT_PUBLIC_API_URL}/alumni/${id}    DELETE`);
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/alumni/${id}`,{
         method: 'DELETE',
         headers: {
             'Authorization': `${token()}`
         },
-    }).then((response)=>{
-        console.log(response);
-        return response.json();
+    }).then((res)=>{
+        console.log(res);
+        return res.json();
     }
     );
     console.log(response);

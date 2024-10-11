@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { useRouter } from "@/components/navigation";
+import { Textarea } from "@/components/ui/textarea";
 
 type PageProps = Partial<{
   data: any;
@@ -20,7 +21,7 @@ const Form = ({ data, notEdit = false,action }: PageProps) => {
     image: data?.image || "",
     name: data?.name || "",
     position: data?.position || "",
-    decription: data?.decription || "",
+    description: data?.description || "",
     phone: data?.phone || "",
     email: data?.email || "",
     facebook: data?.facebook || "",
@@ -46,16 +47,19 @@ const Form = ({ data, notEdit = false,action }: PageProps) => {
       <Card>
         <CardContent>
           <form action={(e:FormData)=>{
-            if(action){
-              action(e)
+            async function runAct(){
+              if(action){
+                await action(e)
+              }
+              toast.success("Data has been saved")
+              router.back()
             }
-            toast.success("Data has been saved")
-            router.back()
+            runAct()
           }}>
             {data?.id && <input type="hidden" name="id" value={data?.id} />}
             <div>
               <Label htmlFor="image">Image:</Label>
-              {!data.image && <UploadSingleFile />}
+              {(!data?.image || !data) && <UploadSingleFile />}
               {data?.image && notEdit && <img src={data?.image} alt="Image" />}
               {data?.image && !notEdit && (
                 <UploadSingleFile image={data?.image} />
@@ -84,14 +88,18 @@ const Form = ({ data, notEdit = false,action }: PageProps) => {
               />
             </div>
             <div>
-              <Label htmlFor="description">decription:</Label>
-              <Input
+              <Label htmlFor="description">Decription:</Label>
+              <Textarea
                 name="description"
-                type="text"
                 id="description"
-                value={formData.decription}
-                onChange={handleInputChange}
-                readOnly={notEdit}
+                defaultValue={formData.description}
+                onChange={(e:React.ChangeEvent<any>)=>{
+                  setFormData((prevState) => ({
+                    ...prevState,
+                    decription: e.target.value,
+                  }));
+                }}
+                disabled={notEdit}
               />
             </div>
             <div>
@@ -131,7 +139,7 @@ const Form = ({ data, notEdit = false,action }: PageProps) => {
               <Label htmlFor="instagram">Instagram:</Label>
               <Input
                 name="instagram"
-                type="checkbox"
+                type="text"
                 id="instagram"
                 checked={formData.instagram}
                 onChange={handleInputChange}
@@ -142,7 +150,7 @@ const Form = ({ data, notEdit = false,action }: PageProps) => {
               <Label htmlFor="twitter">Twitter:</Label>
               <Input
                 name="twitter"
-                type="checkbox"
+                type="text"
                 id="twitter"
                 checked={formData.twitter}
                 onChange={handleInputChange}
@@ -150,7 +158,7 @@ const Form = ({ data, notEdit = false,action }: PageProps) => {
               />
             </div>
             <div style={{ marginTop: "1rem" }} />
-            <Button type="submit">Submit</Button>
+           {!notEdit && <Button type="submit">Submit</Button>}
           </form>
         </CardContent>
       </Card>

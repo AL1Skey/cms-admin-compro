@@ -151,7 +151,7 @@ const Form = ({ data, notEdit = false,action }: PageProps) => {
               />
             </div>
             <div style={{ marginTop: "1rem" }} />
-            <Button type="submit">Submit</Button>
+            {!notEdit && <Button type="submit">Submit</Button>}
           </form>
         </CardContent>
       </Card>

@@ -9,9 +9,9 @@ const page = async({params}:{params:any}) => {
   const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/pengurus/${params.id}`, {
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
+      'Authorization': `${token}`
     }
-  });
+  }).then((res) => res.json());
   return (
     <div>
       <Card>
@@ -30,7 +30,7 @@ const page = async({params}:{params:any}) => {
 export default page
 
 export async function generateStaticParams() {
-  const ids: any = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/public/pengurus`);
+  const ids: any = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/public/pengurus`).then((res) => res.json());
   if (!ids?.length) {
     return <NotFound />;
   }

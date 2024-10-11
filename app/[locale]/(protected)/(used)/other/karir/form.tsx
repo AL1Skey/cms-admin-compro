@@ -90,18 +90,18 @@ const Form = ({ data, notEdit = false,action }: PageProps) => {
               />
             </div>
             <div>
-              <Label htmlFor="email">Email:</Label>
+              <Label htmlFor="end_date">Expires in:</Label>
               <Input
-                name="email"
-                type="text"
-                id="email"
-                value={formData.email}
+                name="end_date"
+                type="date"
+                id="end_date"
+                value={formData.end_date}
                 onChange={handleInputChange}
                 readOnly={notEdit}
               />
             </div>
             <div style={{ marginTop: "1rem" }} />
-            <Button type="submit">Submit</Button>
+            {!notEdit && <Button type="submit">Submit</Button>}
           </form>
         </CardContent>
       </Card>

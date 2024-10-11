@@ -6,9 +6,9 @@ function token() {
 }
 
 export const add = async(data:FormData)=>{
-    console.log(`${process.env.NEXT_PUBLIC_API_URL}/pengurus`);
+    console.log(`${process.env.NEXT_PUBLIC_API_URL}/dewan`);
     
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/pengurus`,{
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/dewan`,{
         method: 'POST',
         headers: {
             'Authorization': `${token()}`
@@ -29,7 +29,7 @@ export const add = async(data:FormData)=>{
 export const update = async(data:FormData)=>{
     const id = data.get('id');
     console.log(data,"ASDASDPPPPPPPPPPPPPPPPPPPPPPPPP");
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/pengurus/${id}`,{
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/dewan/${id}`,{
         method: 'PUT',
         headers: {
             'Authorization': `${token()}`
@@ -45,7 +45,7 @@ export const update = async(data:FormData)=>{
 }
 
 export const deleteAct = async(id:string)=>{
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/pengurus/${id}`,{
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/dewan/${id}`,{
         method: 'DELETE',
         headers: {
             'Authorization': `${token()}`

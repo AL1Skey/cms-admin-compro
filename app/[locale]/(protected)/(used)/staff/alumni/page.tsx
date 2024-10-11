@@ -4,6 +4,7 @@ import BasicTable from '../../components/basic-table';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { cookies } from 'next/headers';
+import { deleteAct } from './action/action';
 
 const dataset = [
     {
@@ -29,6 +30,18 @@ const dataset = [
     // Add more dummy data here if needed
 ];
 
+const columns = [
+    "No",
+    "Name",
+    "Email",
+    "Image",
+    "Phone",
+    "Pekerjaan",
+    "Angkatan",
+    "Jurusan",
+    "Approval",
+]
+
 const Page = async() => {
     const token = cookies().get('Authorization')?.value;
     const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/alumni`, {
@@ -50,7 +63,7 @@ const Page = async() => {
                 </div>
             </CardHeader>
             <CardContent>
-            <BasicTable columns={Object.keys(dataset[0])} tableData={dataset} />
+            <BasicTable columns={columns} tableData={data} action={deleteAct} />
             </CardContent>
           </Card>
             
