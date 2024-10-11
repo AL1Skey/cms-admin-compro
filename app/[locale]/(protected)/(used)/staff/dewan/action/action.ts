@@ -36,7 +36,6 @@ export const update = async(data:FormData)=>{
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/dewan/${id}`,{
         method: 'PUT',
         headers: {
-            'Content-Type':'application/x-www-form-urlencoded',
             'Authorization': `${token()}`
         },
         body: data
