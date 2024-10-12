@@ -124,7 +124,7 @@ const Form = ({ data, notEdit = false,action }: PageProps) => {
                 name="createAt"
                 type="date"
                 id="createAt"
-                value={typeof formData.createAt === "string" ? new Date(formData.createAt).toISOString().substr(0, 10) : ""}
+                value={formData.createAt !== "" && typeof formData.createAt === "string" ? new Date(formData.createAt).toISOString().substr(0, 10) : ""}
                 onChange={handleInputChange}
               />
             </div>

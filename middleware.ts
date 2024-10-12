@@ -1,6 +1,7 @@
 import createMiddleware from 'next-intl/middleware';
 import {NextRequest, NextResponse} from 'next/server';
 import {locales} from '@/config';
+import { usePathname } from 'next/navigation';
 
 export default async function middleware(request: NextRequest) {
   // Step 1: Use the incoming request (example)
@@ -15,7 +16,6 @@ export default async function middleware(request: NextRequest) {
  
   // Step 3: Alter the response (example)
   response.headers.set('dashcode-locale', defaultLocale);
-
 
  
   return response;
