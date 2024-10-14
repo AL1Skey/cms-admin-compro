@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Link } from '@/i18n/routing';
+import Link from "next/link";
 import { Icon } from "@/components/ui/icon";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -13,7 +13,7 @@ import { cn } from "@/lib/utils"
 import { Loader2 } from 'lucide-react';
 import { loginUser } from '@/action/auth-action';
 import { toast } from "sonner"
-import { useRouter } from '@/components/navigation';
+import { useRouter } from 'next/navigation';
 
 const schema = z.object({
   email: z.string().email({ message: "Your email is invalid." }),

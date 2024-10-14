@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Icon } from "@/components/ui/icon";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { Link } from '@/i18n/routing';
+import Link from "next/link";
 
 interface FormValues {
   test: {

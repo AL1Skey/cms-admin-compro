@@ -2,7 +2,6 @@
 
 import React from 'react'
 import { Ellipsis, LogOut } from "lucide-react";
-import { usePathname } from "@/components/navigation";
 
 
 import { cn } from "@/lib/utils";
@@ -25,14 +24,13 @@ import SearchBar from '@/components/partials/sidebar/common/search-bar'
 import TeamSwitcher from '../common/team-switcher'
 import IconNav from './icon-nav';
 import SidebarNav from './sideabr-nav';
-import { useTranslations } from 'next-intl';
+import { usePathname } from 'next/navigation';
 
 
 export function MenuTwoColumn() {
     // translate
-    const t = useTranslations("Menu")
-    const pathname = usePathname();
-    const menuList = getMenuList(pathname, t);
+    const pathname = usePathname() ?? "";
+    const menuList = getMenuList(pathname);
 
     return (
         <>

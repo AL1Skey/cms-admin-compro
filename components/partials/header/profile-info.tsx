@@ -15,7 +15,7 @@ import {
 import { Icon } from "@/components/ui/icon"
 import { signOut, auth } from "@/lib/auth";
 import Image from "next/image";
-import { Link } from '@/i18n/routing';
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { cookies } from "next/headers";
 import { redirect } from "@/components/navigation";

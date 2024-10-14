@@ -4,7 +4,7 @@ import React, { CSSProperties } from 'react'
 import { Button } from "@/components/ui/button";
 import { Icon } from '@/components/ui/icon'
 import { type Menu } from '@/lib/menus';
-import { Link } from '@/i18n/routing';
+import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { GripVertical } from 'lucide-react';
 

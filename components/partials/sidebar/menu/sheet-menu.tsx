@@ -1,5 +1,5 @@
 'use client'
-import { Link } from '@/i18n/routing';
+import Link from "next/link";
 import { MenuIcon, PanelsTopLeft } from "lucide-react";
 import { Icon } from "@/components/ui/icon";
 import { Button } from "@/components/ui/button";

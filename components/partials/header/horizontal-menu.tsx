@@ -2,9 +2,8 @@
 import React from "react";
 import { cn } from "@/lib/utils";
 import { ChevronDown } from "lucide-react";
-import { Link, usePathname } from "@/components/navigation";
+import {  usePathname } from "next/navigation";
 import { useConfig } from '@/hooks/use-config'
-import { useTranslations } from 'next-intl';
 import { getHorizontalMenuList } from "@/lib/menus";
 import { Icon } from "@/components/ui/icon";
 import {
@@ -23,15 +22,16 @@ import {
   MenubarTrigger,
 } from "@/components/ui/menubar"
 import { useMediaQuery } from "@/hooks/use-media-query";
+import Link from "next/link";
 
 export default function HorizontalMenu() {
 
   const [config] = useConfig()
 
-  const t = useTranslations("Menu");
-  const pathname = usePathname();
 
-  const menuList = getHorizontalMenuList(pathname, t)
+  const pathname = usePathname() ?? "";
+
+  const menuList = getHorizontalMenuList(pathname )
 
   const [openDropdown, setOpenDropdown] = React.useState<boolean>(false);
 

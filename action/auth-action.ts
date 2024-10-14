@@ -26,6 +26,7 @@ export const classicloginUser = async (data: any) => {
       body: JSON.stringify(data),
     });
     const {token} = await response.json();
+    
     console.log(token);
     if (token) {
       cookies().set('Authorization', `Bearer ${token}`);
