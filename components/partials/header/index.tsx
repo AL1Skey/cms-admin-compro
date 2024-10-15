@@ -9,7 +9,7 @@ import ThemeSwitcher from './theme-switcher'
 import { SidebarToggle } from '@/components/partials/sidebar/sidebar-toggle'
 import { SheetMenu } from '@/components/partials/sidebar/menu/sheet-menu'
 import HorizontalMenu from "./horizontal-menu"
-import LocalSwitcher from './locale-switcher'
+// import LocalSwitcher from './locale-switcher'
 import HeaderLogo from "./header-logo"
 
 

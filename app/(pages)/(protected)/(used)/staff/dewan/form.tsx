@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { useRouter } from "@/components/navigation";
+import { useRouter } from "next/navigation";
 import { Textarea } from "@/components/ui/textarea";
 
 type PageProps = Partial<{

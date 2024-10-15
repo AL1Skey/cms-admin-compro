@@ -15,7 +15,7 @@ import {
     SelectTrigger,
     SelectValue,
   } from "@/components/ui/select";
-import { useRouter } from "@/components/navigation";
+  import { useRouter } from "next/navigation";
 import {toast} from 'sonner';
 
 type PageProps = Partial<{
@@ -101,11 +101,12 @@ const Form = ({ data, notEdit = false,action }: PageProps) => {
             <div className="space-y-2">
               <Label htmlFor="category">Category</Label>
                 <Select name="category" onValueChange={(e)=>{
+                  console.log(e)
                   setFormData((prevState) => ({
                     ...prevState,
                     ["category"]: e,
                   }))
-                }} value={data?.category}>
+                }} value={formData?.category}>
                     <SelectTrigger>
                       <SelectValue placeholder="Select a Category" />
                     </SelectTrigger>

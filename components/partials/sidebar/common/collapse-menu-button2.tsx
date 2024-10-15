@@ -1,6 +1,7 @@
 "use client";
 import React, { CSSProperties } from 'react'
-import { Link, usePathname } from "@/components/navigation";
+import Link from 'next/link'
+import { usePathname } from 'next/navigation';
 import { useState } from "react";
 import { ChevronDown, Dot, LucideIcon } from "lucide-react";
 
@@ -37,7 +38,7 @@ export function CollapseMenuButton2({
 
 
 }: CollapseMenuButtonProps) {
-    const pathname = usePathname();
+    const pathname = usePathname() ?? '';
     const isSubmenuActive = submenus.some((submenu) => submenu.active || pathname.startsWith(submenu.href));
     const [isCollapsed, setIsCollapsed] = useState<boolean>(isSubmenuActive);
 

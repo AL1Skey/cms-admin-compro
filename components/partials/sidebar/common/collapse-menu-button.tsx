@@ -1,6 +1,5 @@
 "use client";
-import React, { CSSProperties } from 'react'
-import { Link, usePathname } from "@/components/navigation";
+import React, { CSSProperties } from 'react';
 import { useState } from "react";
 import { ChevronDown, Dot, LucideIcon } from "lucide-react";
 import { GripVertical } from 'lucide-react';
@@ -8,7 +7,7 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { DropdownMenuArrow } from "@radix-ui/react-dropdown-menu";
 import { ScrollArea } from "@/components/ui/scroll-area"
-
+import { usePathname } from 'next/navigation';
 import {
     Collapsible,
     CollapsibleContent,
@@ -37,7 +36,6 @@ import { Icon } from "@/components/ui/icon";
 import { Submenu } from "@/lib/menus"
 
 // for dnd 
-
 import {
     useSortable,
     arrayMove,
@@ -51,6 +49,7 @@ import { MultiCollapseMenuButton } from './classic-multi-collapse-button';
 import { useMediaQuery } from '@/hooks/use-media-query';
 import { useMobileMenuConfig } from '@/hooks/use-mobile-menu';
 import { useMenuHoverConfig } from '@/hooks/use-menu-hover';
+import Link from 'next/link';
 
 
 interface CollapseMenuButtonProps {
@@ -72,7 +71,7 @@ export function CollapseMenuButton({
     id,
 
 }: CollapseMenuButtonProps) {
-    const pathname = usePathname();
+    const pathname = usePathname() ?? "/";
     const isSubmenuActive = submenus.some((submenu) => submenu.active || pathname.startsWith(submenu.href));
     const [isCollapsed, setIsCollapsed] = useState<boolean>(isSubmenuActive);
     const [mobileMenuConfig, setMobileMenuConfig] = useMobileMenuConfig()

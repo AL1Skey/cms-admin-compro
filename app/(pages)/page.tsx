@@ -1,5 +1,5 @@
 
-import LoginForm from "./auth/login/login-form";
+import LoginForm from "./login/login-form";
 import Image from "next/image";
 import Social from "@/components/partials/auth/social";
 import Copyright from "@/components/partials/auth/copyright";
@@ -67,7 +67,7 @@ const Login = () => {
                 <div className="md:max-w-[345px] mx-auto font-normal text-default-500 mt-12 uppercase text-sm">
                   Don’t have an account?{" "}
                   <Link
-                    href="/auth/register"
+                    href="/register"
                     className="text-default-900  font-medium hover:underline"
                   >
                     Sign up

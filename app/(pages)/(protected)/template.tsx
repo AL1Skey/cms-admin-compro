@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation'
 
 export default function Template({ children }: { children: React.ReactNode }) {
 
-    const pathname = usePathname()
+    const pathname = usePathname() ?? "";
     return (
         <motion.div
             key={pathname}

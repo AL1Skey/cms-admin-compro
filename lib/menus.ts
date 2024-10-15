@@ -76,44 +76,15 @@ export function getMenuList(pathname: string): Group[] {
     },
     {
       groupLabel: "",
-      id: "about-us",
-      menus: [
-        {
-          id: "about-us",
-          href: "/about-us",
-          label: "About Us",
-          active: pathname.includes("/about-us"),
-          icon: "heroicons-outline:view-grid-add",
-          submenus: [
-            {
-              href: "/about-us/alumni",
-              label: "Alumni (About Us)",
-              active: pathname === "/about-us/alumni",
-              icon: "",
-              children: [],
-            },
-          ],
-        },
-      ],
-    },
-    {
-      groupLabel: "",
       id: "staff",
       menus: [
         {
           id: "staff",
           href: "/staff",
-          label: "Staff",
+          label: "About Us",
           active: pathname.includes("/staff"),
           icon: "heroicons-outline:view-grid-add",
           submenus: [
-            {
-              href: "/staff/alumni-request",
-              label: "Alumni Request",
-              active: pathname === "/staff/alumni-request",
-              icon: "",
-              children: [],
-            },
             {
               href: "/staff/alumni",
               label: "Alumni",
@@ -190,6 +161,20 @@ export function getMenuList(pathname: string): Group[] {
               href: "/table/jurusan",
               label: "Jurusan",
               active: pathname === "/table/jurusan",
+              icon: "",
+              children: [],
+            },
+            {
+              href: "/staff/alumni-request",
+              label: "Alumni Request",
+              active: pathname === "/table/alumni-request",
+              icon: "",
+              children: [],
+            },
+            {
+              href: "/table/alumni",
+              label: "Alumni",
+              active: pathname === "/table/alumni",
               icon: "",
               children: [],
             },

@@ -7,7 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
-import { useRouter } from "@/components/navigation";
+import { useRouter } from "next/navigation";
 
 type PageProps = Partial<{
   data: any;
@@ -70,7 +70,7 @@ const Form = ({ data, notEdit = false,action }: PageProps) => {
               />
             </div>
             <div>
-              <Label htmlFor="description">decription:</Label>
+              <Label htmlFor="description">Decription:</Label>
               <Textarea
                 name="description"
                 id="description"
@@ -95,7 +95,7 @@ const Form = ({ data, notEdit = false,action }: PageProps) => {
                 name="end_date"
                 type="date"
                 id="end_date"
-                value={formData.end_date}
+                value={formData?.end_date ? new Date(formData.end_date).toISOString().split('T')[0] : ""}
                 onChange={handleInputChange}
                 readOnly={notEdit}
               />

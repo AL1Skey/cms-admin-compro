@@ -4,8 +4,9 @@ import NotFound from '@/app/(pages)/not-found';
 import Form from '../../form';
 import { update } from '../../action/action';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-const page = async({id}:{id:string}) => {
+const page = async({params}:{params:any}) => {
   const token = cookies().get('Authorization')?.value;
+  const {id} = params;
   const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/alumni/${id}`, {
     headers: {
       'Content-Type': 'application/json',
@@ -29,20 +30,3 @@ const page = async({id}:{id:string}) => {
 
 export default page
 
-type Params = {
-    id: string;
-}
-
-export async function generateStaticParams(): Promise<Params[]> {
-  const ids = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/public/alumni`,{cache:'no-store'}).then((res) => res.json());
-  
-  // If no data is found, return an empty array
-  if (!ids || ids.length === 0) {
-    return [{ id: 'not-found' }];
-  }
-
-  // Return paths for each `id`
-  return ids.map((id: any) => ({
-    id: id.toString(),  // Ensure ID is a string
-  }));
-}

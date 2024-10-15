@@ -17,8 +17,7 @@ const layout = async ({ children }: { children: React.ReactNode }) => {
     //     redirect("/");
     // }
     // Classic version
-    const headersList = headers()
-    const token = headersList.get('x-auth-token')
+    const token = cookies().get('Authorization')?.value;
     
     // throw new Error(token+"<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<")
     if(!token) {

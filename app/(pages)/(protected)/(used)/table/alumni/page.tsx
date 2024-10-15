@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import BasicTable from '../../components/basic-table';
+import BasicTable from './components/basic-table';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { cookies } from 'next/headers';
 import { deleteAct } from './action/action';
+import ExcelImport from './components/excel-form';
+import ExcelDownloader from './components/excel-download';
 
 const dataset = [
     {
@@ -43,26 +45,21 @@ const columns = [
 
 const Page = async() => {
     const token = cookies().get('Authorization')?.value;
-    const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/alumni`, {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: `${token}`,
-        },
-    }).then((res) => res.json()).catch((err) => {
-        console.error(err);
-    });
     return (
         <div>
             <Card>
             <CardHeader>
                 <div className="flex justify-between">
                     <CardTitle>Alumni</CardTitle>
+                    <div className='flex justify-between gap-10'>
                     <Button><Link href="alumni/add">Add</Link></Button>
+                    <ExcelImport/>
+                    <ExcelDownloader/>
+                    </div>
                 </div>
             </CardHeader>
             <CardContent>
-            <BasicTable columns={columns} tableData={data} action={deleteAct} />
+            <BasicTable columns={columns} action={deleteAct} token={token} />
             </CardContent>
           </Card>
             

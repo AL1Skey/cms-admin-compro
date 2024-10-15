@@ -1,6 +1,6 @@
 'use client'
 import React from 'react'
-import { Link } from 'next/navigation'
+import Link from 'next/link'
 import DashCodeLogo from "@/components/dascode-logo"
 import { useConfig } from '@/hooks/use-config'
 import { useMediaQuery } from '@/hooks/use-media-query'

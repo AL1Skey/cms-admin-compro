@@ -4,7 +4,8 @@ import NotFound from '@/app/(pages)/not-found';
 import Form from '../../form';
 import { update } from '../../action/action';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-const page = async({id}:{id:string}) => {
+const page = async({params}:{params:any}) => {
+  const {id} = params;
   const token = cookies().get('Authorization')?.value;
   const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/blog/${id}`, {
     headers: {
@@ -29,28 +30,3 @@ const page = async({id}:{id:string}) => {
 
 export default page
 
-type Params = {
-    id: string;
-}
-
-export async function generateStaticParams(): Promise<Params[]> {
-  const ids: any = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/public/blog`,{cache:'no-store'}).then((res) => res.json());
-   // Return empty array if no IDs are found
-   if (!ids || ids.length === 0) {
-    return [{ id: 'not-found' }];
-  }
-  console.log(ids.map((item: any) => {
-    return {
-     
-        id: item?.id.toString(),
-      
-    };
-  }));
-  return ids.map((item: any) => {
-    return {
-     
-        id: item?.id.toString(),
-      
-    };
-  });
-}

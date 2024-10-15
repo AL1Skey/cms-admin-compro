@@ -1,12 +1,12 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import UploadSingleFile from "../../components/forms/upload-single-file";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { useRouter } from "@/components/navigation";
+import { useRouter } from "next/navigation";
 import {
   Select,
   SelectContent,
@@ -34,6 +34,8 @@ const Form = ({ data, notEdit = false, action }: PageProps) => {
     jurusan: data?.jurusan || "",
     approval: data?.approval ? "1" : "0",
   });
+  const [jurusan, setJurusan] = useState<any[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -48,6 +50,28 @@ const Form = ({ data, notEdit = false, action }: PageProps) => {
     // Handle form submission logic here
   };
 
+  useEffect(() => {
+    async function fetchData() {
+      setLoading(true);
+      const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/public/jurusan`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((res) => res.json())
+        .catch((err) => {
+          console.error(err);
+        });
+      setJurusan(data);
+      console.log(data);
+      setLoading(false);
+    }
+    fetchData();
+  }, []);
+  if (loading) {
+    return <div>Loading...</div>;
+  }
   return (
     <div>
       <Card>
@@ -132,14 +156,26 @@ const Form = ({ data, notEdit = false, action }: PageProps) => {
             </div>
             <div>
               <Label htmlFor="jurusan">Jurusan:</Label>
-              <Input
-                name="jurusan"
-                type="text"
-                id="jurusan"
-                value={formData.jurusan}
-                onChange={handleInputChange}
-                readOnly={notEdit}
-              />
+              <Select name="jurusan" onValueChange={(e)=>{
+                console.log(e)
+                  setFormData((prevState) => ({
+                    ...prevState,
+                    ["jurusan"]: e,
+                  }))
+                }} value={formData.jurusan} disabled={notEdit}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Jurusan" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        <SelectLabel>Jurusan</SelectLabel>
+                        {jurusan && jurusan.map((item, index) => (
+                          <SelectItem key={index} value={item.id}>{item.name}</SelectItem>
+                        ))}
+                      </SelectGroup>
+                    </SelectContent>
+                </Select>
+              
             </div>
             <div>
               <Label htmlFor="approval">Approval:</Label>

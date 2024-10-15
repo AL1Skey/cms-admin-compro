@@ -18,7 +18,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { cookies } from "next/headers";
-import { redirect } from "@/components/navigation";
+import { redirect } from "next/navigation";
 import { verifyToken } from "@/lib/jwt";
 
 const ProfileInfo = async () => {

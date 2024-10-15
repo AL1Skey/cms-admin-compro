@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Submenu, Group } from '@/lib/menus';
 import { useParams, usePathname } from 'next/navigation';
-import { Link } from "@/components/navigation"
+import Link from 'next/link';
 import { useConfig } from '@/hooks/use-config';
 import { Button } from '@/components/ui/button';
 import MenuLabel from '../common/menu-label';
@@ -15,7 +15,7 @@ import SearchBar from '../common/search-bar';
 import { getLangDir } from 'rtl-detect';
 const SidebarNav = ({ menuList }: { menuList: Group[] }) => {
   const [config, setConfig] = useConfig()
-  const pathname = usePathname();
+  const pathname = usePathname() ?? "";
   const params = useParams<{ locale: string; }>();
   const direction = getLangDir(params?.locale ?? '');
   const activeKey = pathname?.split('/')?.[2];

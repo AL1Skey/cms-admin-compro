@@ -7,7 +7,7 @@ const page = () => {
     <div>
       <Card>
         <CardHeader>
-            <CardTitle>Alumni</CardTitle>
+            <CardTitle>Jurusan</CardTitle>
         </CardHeader>
         <CardContent>
             <Form action={add}/>
@@ -18,4 +18,3 @@ const page = () => {
 }
 
 export default page
-

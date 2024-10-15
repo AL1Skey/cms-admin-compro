@@ -1,6 +1,6 @@
 'use client';
 import React from 'react'
-import { Link, usePathname, useRouter } from "@/components/navigation";
+
 import {
     Breadcrumb,
     BreadcrumbEllipsis,
@@ -12,10 +12,13 @@ import {
 } from "@/components/ui/breadcrumb"
 import { Icon } from "@/components/ui/icon"
 import { ReactNode } from "react";
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 
 const SiteBreadcrumb = ({ children }: { children?: ReactNode }) => {
-    const location = usePathname();
-    const locations = location.split('/').filter(path => path)
+    const location = usePathname() ?? "";
+    const locations = location?.split('/').filter(path => path)
 
 
 

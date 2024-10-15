@@ -8,28 +8,11 @@ import { cookies } from "next/headers";
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { update } from "../../action/action";
-type Params = {
-    id: string;
-}
 
-export async function generateStaticParams(): Promise<Params[]> {
-  const ids: any = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/public/header`,{cache:'no-store'}).then(res => res.json());
-  // Return empty array if no IDs are found
-  if (!ids || ids.length === 0) {
-    return [{ id: 'not-found' }];
-  }
-  console.log(ids);
-  return ids.map((item: any) => {
-    return {
-     
-        id: item?.id.toString(),
-      
-    };
-  });
-}
 
-const page = async ({ id }: { id: any }) => {
+const page = async ({ params }: { params: any }) => {
   const token = await cookies().get("Authorization")?.value;
+  const {id} = params
   const post = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/header/${id}`,
     {
@@ -46,7 +29,7 @@ const page = async ({ id }: { id: any }) => {
         <CardHeader>
           <div className="flex justify-between">
             <CardTitle>Banner</CardTitle>
-            <Link href="/en/home/banner">
+            <Link href="/home/banner">
               <Button>Go Back</Button>
             </Link>
           </div>

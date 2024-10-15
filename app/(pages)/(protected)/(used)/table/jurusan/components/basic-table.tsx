@@ -19,7 +19,7 @@ const BasicTable: React.FC<Partial<{
   tableData: any[]|undefined|null;
   action(id: string | null): Promise<void>|null;
 }>> = ({ columns = [], tableData = [], action=null }) => {
-  const pathname = usePathname();
+  const pathname = usePathname() ?? "";
   const router = useRouter();
   const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false);
   const [actId, setActId] = useState<string | null>(null);
@@ -55,18 +55,9 @@ const BasicTable: React.FC<Partial<{
         </TableHeader>
         <TableBody>
           {tableData?.map((row, index1) => (
-            <TableRow key={`table-data-${index1}`}>
+            <TableRow key={`table-data-${index1}`} className="text-center">
               {Object.keys(row).map((key, index) => (
                 <>
-                  {key === "image" && (
-                    <TableCell key={`table-data-cell-${index}`}>
-                      <img
-                        src={row[key]}
-                        alt="Image"
-                        className="w-[10rem] h-[7rem] p-2"
-                      />
-                    </TableCell>
-                  )}
                   { key === "approval" && (
                     <TableCell key={`table-data-cell-${index}`}>
                       {row[key] ? "Approved" : "Not Approved"}
@@ -86,12 +77,12 @@ const BasicTable: React.FC<Partial<{
                 </>
               ))}
               <TableCell>
-                <div className="flex items-center gap-4">
+                <div className="flex items-center justify-center gap-4">
                   <Link
                     href={pathname + `/${row && row["id"] ? row["id"] : ""}`}
                   >
                     <Button color="secondary">
-                      <Eye className="w-4 h-4" /> Up to About Us
+                      <Eye className="w-4 h-4" /> Details
                     </Button>
                   </Link>
                   <Link

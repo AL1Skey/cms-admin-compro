@@ -1,4 +1,4 @@
-import { parseJSON } from "date-fns";
+
 
 interface RegisterData {
     email: string;

@@ -1,9 +1,10 @@
 'use client';
 
-import { useLocale } from 'next-intl';
+// import { useLocale } from 'next-intl';
 import { useParams } from 'next/navigation';
 import { locales } from '@/config';
-import { usePathname, useRouter } from '@/i18n/routing';
+import { useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 
 import { useTransition } from 'react';
 import {
@@ -18,18 +19,18 @@ import Image from 'next/image';
 export default function LocalSwitcher() {
     const [isPending, startTransition] = useTransition();
     const router = useRouter();
-    const pathname = usePathname();
+    const pathname = usePathname() ?? "";
     const params = useParams();
-    const localActive = useLocale();
+    // const localActive = useLocale();
 
     const onSelectChange = (nextLocale: string) => {
         startTransition(() => {
 
-            router.replace(pathname, { locale: nextLocale });
+            router.replace(pathname);
         });
     };
     return (
-        <Select onValueChange={onSelectChange} defaultValue={localActive}>
+        <Select onValueChange={onSelectChange} defaultValue={"en"}>
             <SelectTrigger className='w-[94px] border-none read-only:bg-transparent'>
                 <SelectValue placeholder="Select a language" />
             </SelectTrigger>

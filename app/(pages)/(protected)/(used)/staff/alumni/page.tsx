@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import BasicTable from '../../components/basic-table';
+import BasicTable from './components/basic-table';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { cookies } from 'next/headers';
@@ -43,7 +43,7 @@ const columns = [
 
 const Page = async() => {
     const token = cookies().get('Authorization')?.value;
-    const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/alumni`, {
+    const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/alumni?isShown=true&approval=true`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -59,6 +59,7 @@ const Page = async() => {
                 <div className="flex justify-between">
                     <CardTitle>Alumni</CardTitle>
                     <Button><Link href="alumni/add">Add</Link></Button>
+
                 </div>
             </CardHeader>
             <CardContent>

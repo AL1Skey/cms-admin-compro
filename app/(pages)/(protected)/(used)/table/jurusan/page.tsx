@@ -4,6 +4,7 @@ import BasicTable from './components/basic-table';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { cookies } from 'next/headers';
+import { deleteAct } from './action/action';
 
 const dataset = [
     {
@@ -28,19 +29,15 @@ const dataset = [
     },
     // Add more dummy data here if needed
 ];
+
 const columns = [
     "No",
     "Name",
-    "Email",
-    "Phone",
-    "Pekerjaan",
-    "Angkatan",
-    "Jurusan",
-    "Approval",
 ]
+
 const Page = async() => {
     const token = cookies().get('Authorization')?.value;
-    const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/alumni?approval=false`, {
+    const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/jurusan`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -54,12 +51,12 @@ const Page = async() => {
             <Card>
             <CardHeader>
                 <div className="flex justify-between">
-                    <CardTitle>Alumni Request</CardTitle>
+                    <CardTitle>Jurusan</CardTitle>
                     <Button><Link href="alumni/add">Add</Link></Button>
                 </div>
             </CardHeader>
             <CardContent>
-            <BasicTable columns={columns} tableData={data} />
+            <BasicTable columns={columns} tableData={data} action={deleteAct} />
             </CardContent>
           </Card>
             

@@ -19,7 +19,7 @@ const BasicTable: React.FC<Partial<{
   tableData: any[]|undefined|null;
   action(id: string | null): Promise<void>|null;
 }>> = ({ columns = [], tableData = [], action=null }) => {
-  const pathname = usePathname();
+  const pathname = usePathname() ?? "";
   const router = useRouter();
   const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false);
   const [actId, setActId] = useState<string | null>(null);
@@ -91,7 +91,7 @@ const BasicTable: React.FC<Partial<{
                     href={pathname + `/${row && row["id"] ? row["id"] : ""}`}
                   >
                     <Button color="secondary">
-                      <Eye className="w-4 h-4" /> Up to About Us
+                      <Eye className="w-4 h-4" /> Details
                     </Button>
                   </Link>
                   <Link

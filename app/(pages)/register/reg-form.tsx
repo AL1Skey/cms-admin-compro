@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/select";
 import { registerAct } from "./action";
 import { toast } from "sonner";
-import { useRouter } from "@/components/navigation";
+import { useRouter } from "next/navigation";
 
 type Inputs = {
   name: string;

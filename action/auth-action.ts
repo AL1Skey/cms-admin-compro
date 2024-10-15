@@ -1,7 +1,6 @@
 'use server'
 import {signIn} from "@/lib/auth";
 import { cookies } from "next/headers";
-import { getCookie, setCookie } from 'typescript-cookie'
 export const loginUser = async (data: any) => {
   try {
     const response = await signIn("credentials", {
