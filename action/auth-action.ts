@@ -39,3 +39,35 @@ export const classicloginUser = async (data: any) => {
     throw new Error(error as string);
   }
 }
+
+export const forgotPasswordAction = async (data: any) => {
+  try {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/forgot-password`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    }).then((res) => res.json());
+    return response;
+  } catch (error) {
+    throw new Error(error as string);
+  }
+};
+
+
+export const resetPasswordAction = async (data: any) => {
+  const id = data.id;
+  try {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/reset-password/${id}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    }).then((res) => res.json());
+    return response;
+  } catch (error) {
+    throw new Error(error as string);
+  }
+};

@@ -11,19 +11,38 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from "zod";
 import { cn } from "@/lib/utils"
 import { Loader2 } from 'lucide-react';
-import { classicloginUser, loginUser } from '@/action/auth-action';
+import { classicloginUser, forgotPasswordAction, loginUser, resetPasswordAction } from '@/action/auth-action';
 import { toast } from "sonner"
 import { useRouter } from 'next/navigation';
 
-const schema = z.object({
+type ForgotPasswordFormProps = Partial<{
+  email:string;
+  resetPassword: boolean;
+  token: any;
+}>;
+
+const resetPasswordSchema = z.object({
   email: z.string().email({ message: "Your email is invalid." }),
-  password: z.string().min(4),
+  password: z.string().min(1, { message: "Password must not be empty." }),
+  confirmPassword: z.string().min(1, { message: "Confirm Password must not be empty." }),
+}).refine((data) => data.password === data.confirmPassword, {
+  message: "Passwords don't match",
+  path: ["confirmPassword"],
 });
-const LoginForm = () => {
+
+const forgotPasswordSchema = z.object({
+  email: z.string().email({ message: "Your email is invalid." }),
+});
+
+const ForgotPasswordForm = ({email="",resetPassword=false,token=""}:ForgotPasswordFormProps) => {
+  
+
+  const schema = resetPassword ? resetPasswordSchema : forgotPasswordSchema;
+
   const [isPending, startTransition] = React.useTransition();
   const router = useRouter();
   const [passwordType, setPasswordType] = React.useState("password");
-
+  const [confirmPasswordType, setConfirmPasswordType] = React.useState("password");
 
   const togglePasswordType = () => {
     if (passwordType === "text") {
@@ -32,27 +51,44 @@ const LoginForm = () => {
       setPasswordType("text");
     }
   };
+
+  const toggleConfirmPasswordType = () => {
+    if (confirmPasswordType === "text") {
+      setConfirmPasswordType("password");
+    } else if (confirmPasswordType === "password") {
+      setConfirmPasswordType("text");
+    }
+  }
+
+
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
   } = useForm({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(forgotPasswordSchema),
     mode: "all",
     defaultValues: {
-      email: "",
+      email: `${email || ""}`,
       password: "",
+      confirmPassword: "",
     },
   });
   const [isVisible, setIsVisible] = React.useState(false);
 
   const toggleVisibility = () => setIsVisible(!isVisible);
 
-  const onSubmit = (data: z.infer<typeof schema>) => {
+  const onSubmit = (data: z.infer<typeof forgotPasswordSchema>) => {
     startTransition(async () => {
       try {
-        const response = await classicloginUser(data);
+        let response:any;
+        if(resetPassword){
+          response = await resetPasswordAction(data);
+        }
+        else{
+          response = await forgotPasswordAction(data);
+        }
         console.log(response);
         if (!!response.error) {
           toast("Event has been created", {
@@ -60,8 +96,17 @@ const LoginForm = () => {
 
           })
         } else {
-          router.push('/home/banner');
-          toast.success("Successfully logged in ");
+          if(resetPassword){
+            toast.success("Successfully reset password");
+            router.push('/login');
+          }
+          else{
+            if(response.token){
+            router.push(`/forgot-password/${response.token}`);}
+            else{
+              toast.error("Email Not Found");
+            }
+          }
         }
       } catch (err: any) {
         toast.error(err.message);
@@ -76,7 +121,7 @@ const LoginForm = () => {
           Email{" "}
         </Label>
         <Input size="lg"
-          disabled={isPending}
+          disabled={isPending || resetPassword}
           {...register("email")}
           type="email"
           id="email"
@@ -91,6 +136,8 @@ const LoginForm = () => {
         </div>
       )}
 
+      {resetPassword &&
+      <>
       <div className="mt-3.5 space-y-2">
         <Label htmlFor="password" className="mb-2 font-medium text-default-600">
           Password{" "}
@@ -125,24 +172,48 @@ const LoginForm = () => {
           {errors.password.message}
         </div>
       )}
+      <div className="mt-3.5 space-y-2">
+        <Label htmlFor="confirmPassword" className="mb-2 font-medium text-default-600">
+          Confirm Password{" "}
+        </Label>
+        <div className="relative">
+          <Input size="lg"
+            disabled={isPending}
+            {...register("confirmPassword")}
+            type={confirmPasswordType}
+            id="confirmPassword"
+            className="peer  "
+            placeholder=" "
+          />
 
-      <div className="flex justify-between">
-        {/* <div className="flex gap-2 items-center">
-          <Checkbox id="checkbox" defaultChecked />
-          <Label htmlFor="checkbox">Keep Me Signed In</Label>
-        </div> */}
-        <Link
-          href="/forgot-password"
-          className="text-sm text-default-800 dark:text-default-400 leading-6 font-medium"
-        >
-          Forgot Password?
-        </Link>
+          <div
+            className="absolute top-1/2 -translate-y-1/2 translate-x-[25rem] cursor-pointer"
+            onClick={toggleConfirmPasswordType}
+          >
+            {confirmPasswordType === "password" ? (
+              <Icon icon="heroicons:eye" className="w-5 h-5 text-default-400" />
+            ) : (
+              <Icon
+                icon="heroicons:eye-slash"
+                className="w-5 h-5 text-default-400"
+              />
+            )}
+          </div>
+        </div>
       </div>
+      {errors.confirmPassword && (
+        <div className=" text-destructive mt-2 text-sm">
+          {errors.confirmPassword.message}
+        </div>
+      )}
+      </>
+      }
+
       <Button fullWidth disabled={isPending}>
         {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-        {isPending ? "Loading..." : "Sign In"}
+        {isPending ? "Loading..." : `${resetPassword ? "Reset Password" : "Verify Email"}`}
       </Button>
     </form>
   );
 };
-export default LoginForm;
+export default ForgotPasswordForm;

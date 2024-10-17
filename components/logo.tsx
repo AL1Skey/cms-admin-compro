@@ -23,11 +23,11 @@ const Logo = () => {
     if (config.sidebar === 'two-column' || !isDesktop) return null
 
     return (
-        <Link href="/dashboard/analytics" className="flex gap-2 items-center    ">
+        <Link href="/home/banner" className="flex gap-2 items-center    ">
             <DashCodeLogo className="  text-default-900 h-8 w-8 [&>path:nth-child(3)]:text-background [&>path:nth-child(2)]:text-background" />
             {(!config?.collapsed || hovered) && (
                 <h1 className="text-xl font-semibold text-default-900 ">
-                    DashCode
+                    Ikatan Alumni Aman Jaya
                 </h1>
             )}
         </Link>

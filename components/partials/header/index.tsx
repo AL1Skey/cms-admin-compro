@@ -14,8 +14,6 @@ import HeaderLogo from "./header-logo"
 
 
 const DashCodeHeader = async () => {
-
-
     return (
         <>
             <HeaderContent>

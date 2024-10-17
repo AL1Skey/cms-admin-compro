@@ -1,10 +1,10 @@
-
 import Link from "next/link";
-import RegForm from "./reg-form";
+import Form from "./Form";
 import Image from "next/image";
+import Social from "@/components/partials/auth/social";
 import Copyright from "@/components/partials/auth/copyright";
 import Logo from "@/components/partials/auth/logo";
-const Register = () => {
+const Page = () => {
   return (
     <>
       <div className="flex w-full items-center overflow-hidden min-h-dvh h-dvh basis-full">
@@ -34,40 +34,40 @@ const Register = () => {
               />
             </div>
           </div>
-          <div className="flex-1 relative dark:bg-default-100 bg-white ">
-            <div className=" h-full flex flex-col">
+          <div className="flex-1 relative">
+            <div className=" h-full flex flex-col  dark:bg-default-100 bg-white">
               <div className="max-w-[524px] md:px-[42px] md:py-[44px] p-7  mx-auto w-full text-2xl text-default-900  mb-3 h-full flex flex-col justify-center">
                 <div className="flex justify-center items-center text-center mb-6 lg:hidden ">
                   <Link href="/">
                     <Logo />
                   </Link>
                 </div>
-                <div className="text-center 2xl:mb-10 mb-5">
-                  <h4 className="font-medium">Sign up</h4>
-                  <div className="text-default-500  text-base">
-                    Create an account
+                <div className="text-center 2xl:mb-10 mb-4">
+                  <h4 className="font-medium">Forgot Password</h4>
+                  <div className="text-default-500 text-base">
+                    Forgot your password? Don't worry, we got you covered.
                   </div>
                 </div>
-                <RegForm />
-                {/* <div className=" relative border-b-[#9AA2AF] border-opacity-[16%] border-b pt-6">
-                  <div className=" absolute inline-block  bg-default-50 dark:bg-default-100 left-1/2 top-1/2 transform -translate-x-1/2 px-4 min-w-max text-sm  text-default-500  font-normal ">
+                <Form />
+                {/* <div className="relative border-b-[#9AA2AF] border-opacity-[16%] border-b pt-6">
+                  <div className="absolute inline-block bg-default-50 dark:bg-default-100 left-1/2 top-1/2 transform -translate-x-1/2 px-4 min-w-max text-sm text-default-500 font-normal">
                     Or continue with
                   </div>
                 </div>
                 <div className="max-w-[242px] mx-auto mt-8 w-full">
-                  <Social locale={""} />
+                  <Social locale={locale} />
                 </div> */}
-                <div className="max-w-[225px] mx-auto font-normal text-default-500  2xl:mt-12 mt-6 uppercase text-sm">
-                  Already registered?
+                {/* <div className="md:max-w-[345px] mx-auto font-normal text-default-500 mt-12 uppercase text-sm">
+                  Don’t have an account?{" "}
                   <Link
-                    href="/login"
+                    href="/register"
                     className="text-default-900  font-medium hover:underline"
                   >
-                    Sign In
+                    Sign up
                   </Link>
-                </div>
+                </div> */}
               </div>
-              <div className="text-xs font-normal text-default-500 z-[999] pb-10 text-center">
+              <div className="text-xs font-normal text-default-500  z-[999] pb-10 text-center">
                 <Copyright />
               </div>
             </div>
@@ -78,4 +78,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default Page;

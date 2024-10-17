@@ -16,28 +16,28 @@ const Login = () => {
     <>
       <div className="flex w-full items-center overflow-hidden min-h-dvh h-dvh basis-full">
         <div className="overflow-y-auto flex flex-wrap w-full h-dvh">
-          <div
+        <div
             className="lg:block hidden flex-1 overflow-hidden text-[40px] leading-[48px] text-default-600 
  relative z-[1] bg-default-50"
           >
             <div className="max-w-[520px] pt-20 ps-20 ">
               <Link href="/" className="mb-6 inline-block">
-                <Logo />
+                {/* <Logo /> */}
               </Link>
-              <h4>
+              {/* <h4>
                 Unlock your Project
                 <span className="text-default-800 font-bold ms-2">
                   performance
                 </span>
-              </h4>
+              </h4> */}
             </div>
-            <div className="absolute left-0 2xl:bottom-[-160px] bottom-[-130px] h-full w-full z-[-1]">
+            <div className="absolute left-[4rem] top-[4rem] 2xl:bottom-[-160px] bottom-[-130px] h-full w-full z-[-1]">
               <Image
-                src="/images/auth/ils1.svg"
+                src="/logo.png"
                 alt=""
                 width={300}
                 height={300}
-                className="mb-10 w-full h-full"
+                className="mb-10 size-[540px] "
               />
             </div>
           </div>
@@ -64,7 +64,7 @@ const Login = () => {
                 <div className="max-w-[242px] mx-auto mt-8 w-full">
                   <Social locale={locale} />
                 </div> */}
-                <div className="md:max-w-[345px] mx-auto font-normal text-default-500 mt-12 uppercase text-sm">
+                {/* <div className="md:max-w-[345px] mx-auto font-normal text-default-500 mt-12 uppercase text-sm">
                   Don’t have an account?{" "}
                   <Link
                     href="/register"
@@ -72,7 +72,7 @@ const Login = () => {
                   >
                     Sign up
                   </Link>
-                </div>
+                </div> */}
               </div>
               <div className="text-xs font-normal text-default-500  z-[999] pb-10 text-center">
                 <Copyright />
