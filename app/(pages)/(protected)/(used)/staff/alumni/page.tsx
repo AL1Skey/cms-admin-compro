@@ -34,6 +34,7 @@ const columns = [
     "No",
     "Name",
     "Email",
+    "Image",
     "Phone",
     "Pekerjaan",
     "Angkatan",
@@ -58,7 +59,7 @@ const Page = async() => {
             <CardHeader>
                 <div className="flex justify-between">
                     <CardTitle>Alumni</CardTitle>
-                    <Button><Link href="alumni/add">Add</Link></Button>
+                    {/* <Button><Link href="alumni/add">Add</Link></Button> */}
 
                 </div>
             </CardHeader>

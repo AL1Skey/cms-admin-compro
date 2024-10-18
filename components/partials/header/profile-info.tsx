@@ -24,8 +24,14 @@ const ProfileInfo = async () => {
   if (!user) {
     redirect("/");
   }
+  const userData = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/self`, {
+    method: 'GET',
+    headers: {
+      'Authorization': `${cookies().get('Authorization')?.value}`
+    }
+  }).then(res => res.json())
   const session:{[key:string]:any} = {
-    user: user
+    user: userData
   }
 
 
@@ -35,13 +41,13 @@ const ProfileInfo = async () => {
         <DropdownMenuTrigger asChild className=" cursor-pointer">
           <div className=" flex items-center gap-3  text-default-800 ">
 
-            <Image
+            {/* <Image
               src={session?.user?.image as string}
               alt={session?.user?.name?.charAt(0) as string}
               width={36}
               height={36}
               className="rounded-full"
-            />
+            /> */}
 
             <div className="text-sm font-medium  capitalize lg:block hidden  ">
               {session?.user?.name}
@@ -54,13 +60,13 @@ const ProfileInfo = async () => {
         <DropdownMenuContent className="w-56 p-0" align="end">
           <DropdownMenuLabel className="flex gap-2 items-center mb-1 p-3">
 
-            <Image
+            {/* <Image
               src={session?.user?.image as string}
               alt={session?.user?.name?.charAt(0) as string}
               width={36}
               height={36}
               className="rounded-full"
-            />
+            /> */}
 
             <div>
               <div className="text-sm font-medium text-default-800 capitalize ">

@@ -26,6 +26,7 @@ type PageProps = Partial<{
 const Form = ({ data, notEdit = false, action }: PageProps) => {
   const router = useRouter();
   const [formData, setFormData] = useState({
+    image: data?.image || "",
     name: data?.name || "",
     email: data?.email || "",
     phone: data?.phone || "",
@@ -80,10 +81,11 @@ const Form = ({ data, notEdit = false, action }: PageProps) => {
             action={(e: FormData) => {
               async function runAct(e: FormData) {
               if (action) {
-               await action(e);
+                console.log(e);
+                await action(e);
               }
               toast.success("Data has been saved");
-              router.back();
+              router.push('/staff/alumni');
             }
             runAct(e);
             }}
@@ -91,6 +93,7 @@ const Form = ({ data, notEdit = false, action }: PageProps) => {
             encType="multipart/form-data"
           >
             {data?.id && <input type="hidden" name="id" value={data?.id} />}
+            {data?.id && <input type="hidden" name="isShown" value={'1'} />}
             <div>
               <Label htmlFor="image">Image:</Label>
               {(!data?.image || !data) && <UploadSingleFile />}

@@ -24,8 +24,8 @@ const config: DocsThemeConfig = {
     text: (
       <span>
         {new Date().getFullYear()} ©{" "}
-        <a href="https://codeshaper.net/" target="_blank">
-          CodeShaper
+        <a href="https://victorystudio.co.id/" target="_blank">
+          Victory Studio
         </a>
         .
       </span>

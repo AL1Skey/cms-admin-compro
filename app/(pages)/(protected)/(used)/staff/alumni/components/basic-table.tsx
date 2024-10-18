@@ -63,7 +63,7 @@ const BasicTable: React.FC<Partial<{
                       <img
                         src={row[key]}
                         alt="Image"
-                        className="w-[10rem] h-[7rem] p-2"
+                        className="min-w-[10rem] min-h-[7rem] p-2"
                       />
                     </TableCell>
                   )}

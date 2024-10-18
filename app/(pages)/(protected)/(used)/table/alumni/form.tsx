@@ -91,7 +91,7 @@ const Form = ({ data, notEdit = false, action }: PageProps) => {
             encType="multipart/form-data"
           >
             {data?.id && <input type="hidden" name="id" value={data?.id} />}
-         
+            
             <div>
               <Label htmlFor="name">Name:</Label>
               <Input

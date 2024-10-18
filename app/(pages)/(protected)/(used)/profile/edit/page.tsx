@@ -1,6 +1,7 @@
-import { cookies } from 'next/headers'
 import React from 'react'
-import Profile from './Profile'
+import Form from '../form'
+import { cookies } from 'next/headers'
+import { Card, CardContent, CardHeader } from '@/components/ui/card'
 
 const page = async() => {
     const token = cookies().get('Authorization')?.value
@@ -11,9 +12,15 @@ const page = async() => {
         }
     }).then(res => res.json())
   return (
-    <div>
-      <Profile data={data} token={token} />
-    </div>
+    <Card>
+        <CardHeader>
+            <h1>Profile</h1>
+        </CardHeader>
+        <CardContent>
+
+        <Form data={data} />
+        </CardContent>
+    </Card>
   )
 }
 

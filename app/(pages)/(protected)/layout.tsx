@@ -37,7 +37,7 @@ const layout = async ({ children }: { children: React.ReactNode }) => {
     }
     return (
         <LayoutProvider >
-            <ThemeCustomize />
+            {/* <ThemeCustomize /> */}
             <DashCodeHeader />
             <DashCodeSidebar />
             <LayoutContentProvider>

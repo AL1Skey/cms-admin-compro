@@ -9,7 +9,7 @@ export const add = async(data:FormData)=>{
     console.log(`${process.env.NEXT_PUBLIC_API_URL}/alumni`);
     
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/alumni`,{
-        method: 'POST',
+        method: 'PUT',
         headers: {
             'Authorization': `${token()}`
         },

@@ -12,8 +12,8 @@ const inter = Inter({ subsets: ["latin"] });
 // language 
 Link
 export const metadata: Metadata = {
-  title: "Dashcode admin Template",
-  description: "created by codeshaper",
+  title: "Ikatan Alumni Aman Jaya",
+  description: "Ikatan Alumni Aman Jaya",
 };
 
 export default async function RootLayout({

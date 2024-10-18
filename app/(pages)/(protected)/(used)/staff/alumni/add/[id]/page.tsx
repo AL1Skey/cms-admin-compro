@@ -1,7 +1,7 @@
 import React from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Form from '../../form';
-import { add } from '../../action/action';
+import { add, update } from '../../action/action';
 const page = async({params}:{params:any}) => {
   const { id } = params;
   const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/public/alumni/${id}`, {
@@ -19,7 +19,7 @@ const page = async({params}:{params:any}) => {
             <CardTitle>Alumni</CardTitle>
         </CardHeader>
         <CardContent>
-            <Form action={add} data={data}/>
+            <Form action={update} data={{ ...data,id:id }}/>
         </CardContent>
       </Card>
     </div>
