@@ -16,6 +16,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Loader2 } from "lucide-react";
 
 type PageProps = Partial<{
   data: any;
@@ -37,6 +38,7 @@ const Form = ({ data, notEdit = false, action }: PageProps) => {
   });
   const [jurusan, setJurusan] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [isPending, setIsPending] = useState<boolean>(false);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -76,16 +78,24 @@ const Form = ({ data, notEdit = false, action }: PageProps) => {
   return (
     <div>
       <Card>
+        
         <CardContent>
           <form
             action={(e: FormData) => {
               async function runAct(e: FormData) {
-              if (action) {
-                console.log(e);
-                await action(e);
-              }
-              toast.success("Data has been saved");
-              router.push('/staff/alumni');
+                try {
+                  setIsPending(true);
+                  if (action) {
+                    console.log(e);
+                    await action(e);
+                  }
+                  toast.success("Data has been saved");
+                  router.push('/staff/alumni');
+                  setIsPending(false);
+                } catch (error) {
+                  toast.error("Failed to save data");
+                  setIsPending(false);
+                }
             }
             runAct(e);
             }}
@@ -203,7 +213,11 @@ const Form = ({ data, notEdit = false, action }: PageProps) => {
               
             </div>
             <div style={{ marginTop: "1rem" }} />
-            {!notEdit && <Button type="submit">Submit</Button>}
+            {!notEdit && <Button type="submit">
+              {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+              {isPending ? "Loading..." : "Sign In"}
+              </Button>}
+            
           </form>
         </CardContent>
       </Card>

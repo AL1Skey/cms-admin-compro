@@ -7,13 +7,15 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Eye, SquarePen, Trash2 } from "lucide-react";
+import { CheckIcon, Eye, SquarePen, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import DeleteConfirmationDialog from "@/components/delete-confirmation-dialog";
 import { useRouter } from 'next/navigation';
 import { useState } from "react";
+import { acceptRequest, rejectRequest } from "../action/action";
+import { toast } from "sonner";
 const BasicTable: React.FC<Partial<{
   columns: any[];
   tableData: any[]|undefined|null;
@@ -78,29 +80,40 @@ const BasicTable: React.FC<Partial<{
               ))}
               <TableCell>
                 <div className="flex items-center gap-4">
-                  <Link
-                    href={'/about-us/alumni/add' + `/${row && row["id"] ? row["id"] : ""}`}
-                  >
-                    <Button color="secondary">
-                      <Eye className="w-4 h-4" /> Up to About Us
+                    <Button
+                    onClick={() => {
+                      setActId(row["id"]);
+                      async function runAct(){
+                        try {
+                          await acceptRequest(actId);
+                          router.push("/staff/alumni-request");
+                          toast.success("Request has been accepted");
+                        } catch (error) {
+                          toast.error("Failed to accept request");
+                        }
+                      }
+                      runAct();
+                    }}
+                    >
+                      <CheckIcon className="w-3 h-3" /> Accept
                     </Button>
-                  </Link>
-                  <Link
-                    href={
-                      pathname + `/update/${row && row["id"] ? row["id"] : ""}`
-                    }
-                  >
-                    <Button>
-                      <SquarePen className="w-3 h-3" /> Edit
-                    </Button>
-                  </Link>
+                 
                   <Button
                     onClick={() => {
                       setActId(row["id"]);
-                      setDeleteModalOpen(true);
+                      async function runAct(){
+                        try {
+                          await rejectRequest(actId);
+                          router.push("/staff/alumni-request");
+                          toast.success("Request has been rejected");
+                        } catch (error) {
+                          toast.error("Failed to accept request");
+                        }
+                      }
+                      runAct();
                     }}
                   >
-                    <Trash2 className="w-4 h-4" /> Delete
+                    <Trash2 className="w-4 h-4" /> Reject
                   </Button>
                 </div>
               </TableCell>

@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { Textarea } from "@/components/ui/textarea";
+import { Loader2 } from "lucide-react";
 type PageProps = Partial<{
   data: any;
   notEdit: boolean;
@@ -27,7 +28,7 @@ const Form = ({ data, notEdit = false,action }: PageProps) => {
     instagram: data?.instagram || "",
     twitter: data?.twitter || "",
   });
-
+  const [isPending, setIsPending] = useState<boolean>(false);
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prevState) => ({
@@ -48,11 +49,18 @@ const Form = ({ data, notEdit = false,action }: PageProps) => {
           <form action={
             (e:FormData)=>{
               async function runAct() {
-                if (action) {
-                 await action(e);
+                try {
+                  setIsPending(true);
+                  if (action) {
+                   await action(e);
+                  }
+                  toast.success("Data has been saved");
+                  router.push("/staff/pengurus");
+                  setIsPending(false);
+                } catch (error) {
+                  toast.error("Failed to save data");
+                  setIsPending(false);
                 }
-                toast.success("Data has been saved");
-                router.back();
               }
               runAct();
             }
@@ -159,7 +167,10 @@ const Form = ({ data, notEdit = false,action }: PageProps) => {
               />
             </div>
             <div style={{ marginTop: "1rem" }} />
-            {!notEdit && <Button type="submit">Submit</Button>}
+            {!notEdit && <Button type="submit">
+              {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+              {isPending ? "Loading..." : "Sign In"}
+              </Button>}
           </form>
         </CardContent>
       </Card>
