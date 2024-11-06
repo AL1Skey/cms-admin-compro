@@ -14,7 +14,7 @@ const DashCodeFooter = async () => {
                     COPYRIGHT &copy; {new Date().getFullYear()} Victory Studio, All rights Reserved
                 </div>
                 <div className="ltr:md:text-right rtl:md:text-end text-center text-sm">
-                    Hand-crafted & Made by{" "}
+                    Made by{" "}
                     <a
                         href="https://victorystudio.co.id/"
                         target="_blank"
@@ -24,7 +24,7 @@ const DashCodeFooter = async () => {
                     </a>
                 </div>
             </div>
-            <div className='flex md:hidden justify-around items-center'>
+            {/* <div className='flex md:hidden justify-around items-center'>
                 <Link href="/app/chat" className="text-default-600">
                     <div>
                         <span
@@ -75,7 +75,7 @@ const DashCodeFooter = async () => {
                         </span>
                     </div>
                 </Link>
-            </div>
+            </div> */}
 
         </FooterContent>
     )

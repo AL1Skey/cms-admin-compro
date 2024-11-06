@@ -10,7 +10,7 @@ const Logo = () => {
         src={
           mode === "light"
             ? "/images/logo/logo.svg"
-            : "/images/logo/logo-white.svg"
+            : "/logo.png"
         }
         alt=""
         width={300}

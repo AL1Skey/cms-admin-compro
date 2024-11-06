@@ -4,7 +4,7 @@ import BasicTable from './components/basic-table';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { cookies } from 'next/headers';
-
+import Filter from './components/FIlter';
 const dataset = [
     {
         name: 'John Doe',
@@ -28,6 +28,7 @@ const dataset = [
     },
     // Add more dummy data here if needed
 ];
+
 const columns = [
     "No",
     "Name",
@@ -38,28 +39,29 @@ const columns = [
     "Jurusan",
     "Approval",
 ]
-const Page = async() => {
+
+const Page = async({
+    searchParams,
+  }: {
+    searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+  }) => {
     const token = cookies().get('Authorization')?.value;
-    const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/alumni?approval=false`, {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: `${token}`,
-        },
-    }).then((res) => res.json()).catch((err) => {
-        console.error(err);
-    });
+    const {angkatan} = (await searchParams) as { angkatan: string | undefined };
     return (
         <div>
             <Card>
             <CardHeader>
                 <div className="flex justify-between">
-                    <CardTitle>Alumni Request</CardTitle>
+                    <CardTitle>Alumni</CardTitle>
+                    <div className='flex justify-between gap-10'>
+                    <Filter />
                     <Button><Link href="alumni/add">Add</Link></Button>
+                    
+                    </div>
                 </div>
             </CardHeader>
             <CardContent>
-            <BasicTable columns={columns} tableData={data} />
+            <BasicTable columns={columns} token={token} angkatan={angkatan} />
             </CardContent>
           </Card>
             

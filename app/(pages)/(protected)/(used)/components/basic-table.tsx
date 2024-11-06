@@ -78,7 +78,7 @@ const BasicTable: React.FC<Partial<{
                     </TableCell>
                   )}
 
-                  {!["image", "id","createdAt","updatedAt","approval"].includes(key) && (
+                  {!["image","phone","email","facebook","instagram","twitter", "id","createdAt","updatedAt","approval"].includes(key) && (
                     <TableCell key={`table-data-cell-${index}`}>
                       {row[key]}
                     </TableCell>

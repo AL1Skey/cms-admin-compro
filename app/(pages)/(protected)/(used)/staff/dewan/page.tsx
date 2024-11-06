@@ -36,11 +36,6 @@ const columns = [
   "name",
   "position",
   "description",
-  "phone",
-  "email",
-  "facebook",
-  "instagram",
-  "twitter",
 ];
 const Page = async () => {
   const token = cookies().get("Authorization")?.value;

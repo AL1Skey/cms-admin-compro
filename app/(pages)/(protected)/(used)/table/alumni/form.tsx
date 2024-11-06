@@ -89,7 +89,7 @@ const Form = ({ data, notEdit = false, action }: PageProps) => {
                   }
                   toast.success("Data has been saved");
                   router.push("/table/alumni");
-                  setIsPending(false);
+                  // setIsPending(false);
                 } catch (error) {
                   toast.error("Failed to save data");
                   setIsPending(false);
@@ -173,7 +173,7 @@ const Form = ({ data, notEdit = false, action }: PageProps) => {
                       <SelectGroup>
                         <SelectLabel>Jurusan</SelectLabel>
                         {jurusan && jurusan.map((item, index) => (
-                          <SelectItem key={index} value={item.id}>{item.name}</SelectItem>
+                          <SelectItem key={index} value={`${item.id}`}>{item.name}</SelectItem>
                         ))}
                       </SelectGroup>
                     </SelectContent>
@@ -205,7 +205,7 @@ const Form = ({ data, notEdit = false, action }: PageProps) => {
             <div style={{ marginTop: "1rem" }} />
             {!notEdit && <Button type="submit">
               {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-              {isPending ? "Loading..." : "Sign In"}
+              {isPending ? "Loading..." : "Submit"}
               </Button>}
           </form>
         </CardContent>

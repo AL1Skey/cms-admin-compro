@@ -17,6 +17,7 @@ import {
   } from "@/components/ui/select";
   import { useRouter } from "next/navigation";
 import {toast} from 'sonner';
+import Image from "next/image";
 
 type PageProps = Partial<{
   data: any;
@@ -63,7 +64,7 @@ const Form = ({ data, notEdit = false,action }: PageProps) => {
             <div>
               <Label htmlFor="image">Image:</Label>
               {(!data?.image || !data) && <UploadSingleFile />}
-              {data?.image && notEdit && <img src={data?.image} alt="Image" />}
+              {data?.image && notEdit && <Image src={data?.image} alt="Image" />}
               {data?.image && !notEdit && (
                 <UploadSingleFile image={data?.image} />
               )}
@@ -129,6 +130,7 @@ const Form = ({ data, notEdit = false,action }: PageProps) => {
                 onChange={handleInputChange}
               />
             </div>
+           
             
             <div style={{ marginTop: "1rem" }} />
             {!notEdit && <Button type="submit">Submit</Button>}

@@ -7,7 +7,7 @@ import { cookies } from 'next/headers';
 import { deleteAct } from './action/action';
 import ExcelImport from './components/excel-form';
 import ExcelDownloader from './components/excel-download';
-
+import Filter from './components/FIlter';
 const dataset = [
     {
         name: 'John Doe',
@@ -43,8 +43,13 @@ const columns = [
     "Approval",
 ]
 
-const Page = async() => {
+const Page = async({
+    searchParams,
+  }: {
+    searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+  }) => {
     const token = cookies().get('Authorization')?.value;
+    const {angkatan} = (await searchParams) as { angkatan: string | undefined };
     return (
         <div>
             <Card>
@@ -52,14 +57,16 @@ const Page = async() => {
                 <div className="flex justify-between">
                     <CardTitle>Alumni</CardTitle>
                     <div className='flex justify-between gap-10'>
+                    <Filter />
                     <Button><Link href="alumni/add">Add</Link></Button>
                     <ExcelImport/>
                     <ExcelDownloader/>
+
                     </div>
                 </div>
             </CardHeader>
             <CardContent>
-            <BasicTable columns={columns} action={deleteAct} token={token} />
+            <BasicTable columns={columns} action={deleteAct} token={token} angkatan={angkatan} />
             </CardContent>
           </Card>
             

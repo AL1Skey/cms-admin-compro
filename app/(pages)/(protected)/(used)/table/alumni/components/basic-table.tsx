@@ -7,6 +7,15 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Eye, SquarePen, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { usePathname } from "next/navigation";
@@ -19,23 +28,25 @@ const BasicTable: React.FC<
     columns: any[];
     action(id: string | null): Promise<void> | null;
     token: string;
+    angkatan:any
   }>
-> = ({ columns = [], action = null, token = "" }) => {
+> = ({ columns = [], action = null, token = "",angkatan=false }) => {
   const pathname = usePathname() ?? "";
   const router = useRouter();
   const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false);
   const [actId, setActId] = useState<string | null>(null);
   const [tableData, setTableData] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [pages, setPages] = useState<number>(1);
+  const [pages, setPages] = useState<number>(0);
   const [next, setNext] = useState<boolean>(false);
   const [prev, setPrev] = useState<boolean>(true);
   const [offset, setOffset] = useState<number>(1);
   function pagination(page: any) {
     async function fetchData() {
       setLoading(true);
+      const filterAngkatan = angkatan ? `&angkatan=${angkatan}` : "";
       const data = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/alumni?pages=${page}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/alumni?pages=${page}${filterAngkatan}`,
         {
           method: "GET",
           headers: {
@@ -49,7 +60,7 @@ const BasicTable: React.FC<
           console.error(err);
         });
       const isNext = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/alumni?pages=${page + 1}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/alumni?pages=${page + 1}${filterAngkatan}`,
         {
           method: "GET",
           headers: {
@@ -63,7 +74,7 @@ const BasicTable: React.FC<
           console.error(err);
         });
       const isPrev = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/alumni?pages=${page - 1}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/alumni?pages=${page - 1}${filterAngkatan}`,
         {
           method: "GET",
           headers: {
@@ -89,8 +100,9 @@ const BasicTable: React.FC<
   useEffect(() => {
     async function fetchData() {
       setLoading(true);
+      const filterAngkatan = angkatan ? `&angkatan=${angkatan}` : "";
       const data = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/alumni?pages=${pages}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/alumni?pages=${pages}${filterAngkatan}`,
         {
           method: "GET",
           headers: {
@@ -104,7 +116,7 @@ const BasicTable: React.FC<
           console.error(err);
         });
       const isNext = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/alumni?pages=${pages + 1}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/alumni?pages=${pages + 1}${filterAngkatan}`,
         {
           method: "GET",
           headers: {
@@ -118,7 +130,7 @@ const BasicTable: React.FC<
           console.error(err);
         });
       const isPrev = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/alumni?pages=${pages - 1}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/alumni?pages=${pages - 1}${filterAngkatan}`,
         {
           method: "GET",
           headers: {
@@ -137,7 +149,7 @@ const BasicTable: React.FC<
       setLoading(false);
     }
     fetchData();
-  }, []);
+  }, [pages,token,angkatan]);
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -252,7 +264,7 @@ const BasicTable: React.FC<
             Previous
           </Button>
         )}
-        {pages > 1 && (
+        {pages > 0 && (
           <Button
             onClick={() => {
               setPages(pages - 1);
@@ -260,7 +272,7 @@ const BasicTable: React.FC<
             }}
           >
             {" "}
-            {pages - 1}{" "}
+            {pages}{" "}
           </Button>
         )}
         <Button
@@ -270,7 +282,7 @@ const BasicTable: React.FC<
           }}
         >
           {" "}
-          {pages}{" "}
+          {pages +1}{" "}
         </Button>
         {next && (
           <Button
@@ -280,7 +292,7 @@ const BasicTable: React.FC<
             }}
           >
             {" "}
-            {pages + 1}{" "}
+            {pages + 2}{" "}
           </Button>
         )}
         {next && (
