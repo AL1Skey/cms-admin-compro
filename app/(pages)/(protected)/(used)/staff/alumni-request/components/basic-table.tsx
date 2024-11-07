@@ -95,7 +95,7 @@ const BasicTable: React.FC<
       setLoading(true);
       const filterAngkatan = angkatan ? `&angkatan=${angkatan}` : "";
       const data = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/alumni?approval=false&pages=${pages}${filterAngkatan}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/alumni?&phone=distinct&approval=false&pages=${pages}${filterAngkatan}`,
         {
           method: "GET",
           headers: {

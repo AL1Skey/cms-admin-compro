@@ -46,7 +46,7 @@ const BasicTable: React.FC<
       setLoading(true);
       const filterAngkatan = angkatan ? `&angkatan=${angkatan}` : "";
       const data = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/alumni?pages=${page}${filterAngkatan}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/alumni?pages=${page}${filterAngkatan}&approval=true`,
         {
           method: "GET",
           headers: {
@@ -60,7 +60,7 @@ const BasicTable: React.FC<
           console.error(err);
         });
       const isNext = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/alumni?pages=${page + 1}${filterAngkatan}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/alumni?pages=${page + 1}${filterAngkatan}&approval=true`,
         {
           method: "GET",
           headers: {
@@ -74,7 +74,7 @@ const BasicTable: React.FC<
           console.error(err);
         });
       const isPrev = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/alumni?pages=${page - 1}${filterAngkatan}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/alumni?pages=${page - 1}${filterAngkatan}&approval=true`,
         {
           method: "GET",
           headers: {
@@ -93,6 +93,7 @@ const BasicTable: React.FC<
       setPages(page);
       setLoading(false);
       setOffset((page - 1) * 25 + 1);
+      router.refresh();
     }
     fetchData();
   }
@@ -102,7 +103,7 @@ const BasicTable: React.FC<
       setLoading(true);
       const filterAngkatan = angkatan ? `&angkatan=${angkatan}` : "";
       const data = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/alumni?pages=${pages}${filterAngkatan}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/alumni?pages=${pages}${filterAngkatan}&approval=true`,
         {
           method: "GET",
           headers: {
@@ -116,7 +117,7 @@ const BasicTable: React.FC<
           console.error(err);
         });
       const isNext = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/alumni?pages=${pages + 1}${filterAngkatan}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/alumni?pages=${pages + 1}${filterAngkatan}&approval=true`,
         {
           method: "GET",
           headers: {
@@ -130,7 +131,7 @@ const BasicTable: React.FC<
           console.error(err);
         });
       const isPrev = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/alumni?pages=${pages - 1}${filterAngkatan}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/alumni?pages=${pages - 1}${filterAngkatan}&approval=true`,
         {
           method: "GET",
           headers: {
@@ -147,9 +148,10 @@ const BasicTable: React.FC<
       setNext(isNext?.length > 0);
       setPrev(isPrev?.length > 0);
       setLoading(false);
+      router.refresh();
     }
     fetchData();
-  }, [pages,token,angkatan]);
+  }, [pages,token,angkatan,router]);
   if (loading) {
     return <div>Loading...</div>;
   }
