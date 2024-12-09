@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import UploadSingleFile from "../../components/forms/upload-single-file";
+import UploadSingleFile from "./components/upload-single-file";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";

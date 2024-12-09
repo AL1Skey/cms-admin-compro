@@ -88,7 +88,7 @@ const UploadSingleFile = ({
               Drop files here or click to upload.
             </h4>
             <div className="text-xs text-muted-foreground">
-              Max (	336 × 640)
+              Max (	480 × 640 )
             </div>
           </div>
         </div>

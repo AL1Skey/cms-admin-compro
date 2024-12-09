@@ -31,7 +31,7 @@ export default function ExcelImport() {
     formData.append('file', selectedFile);
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/excel/alumni`, {
+      const response = await fetch(`https://api.iaajofficial.com/api/alumni/import`, {
         method: 'POST',
         body: formData,
       }).then((res) => res.json());

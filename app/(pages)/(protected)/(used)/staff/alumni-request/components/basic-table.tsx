@@ -16,6 +16,10 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { CheckIcon, Eye, SquarePen, Trash2 } from "lucide-react";
+import { set } from "date-fns";
+
+
+
 const BasicTable: React.FC<
   Partial<{
     columns: any[];
@@ -80,6 +84,7 @@ const BasicTable: React.FC<
         .catch((err) => {
           console.error(err);
         });
+      data.sort();
       setTableData(data);
       setNext(isNext?.length > 0);
       setPrev(isPrev?.length > 0);
@@ -136,6 +141,7 @@ const BasicTable: React.FC<
         .catch((err) => {
           console.error(err);
         });
+      data.sort();
       setTableData(data);
       setNext(isNext?.length > 0);
       setPrev(isPrev?.length > 0);
@@ -147,7 +153,7 @@ const BasicTable: React.FC<
     return <div>Loading...</div>;
   }
   return (
-    <div>
+    <div >
       <DeleteConfirmationDialog
         open={deleteModalOpen}
         onClose={() => {
@@ -215,10 +221,17 @@ const BasicTable: React.FC<
                       setActId(row["id"]);
                       async function runAct(){
                         try {
+                          setLoading(true);
                           await acceptRequest(row["id"]);
-                          router.push("/staff/alumni-request");
                           toast.success("Request has been accepted");
+                          if (typeof window !== "undefined") {
+                            const height = window.innerHeight;
+                            console.log("Height: ", height);
+                            window.location.reload();
+                          }
+                          // setLoading(false);
                         } catch (error) {
+                          setLoading(false);
                           toast.error("Failed to accept request");
                         }
                       }
@@ -233,10 +246,17 @@ const BasicTable: React.FC<
                       setActId(row["id"]);
                       async function runAct(){
                         try {
+                          setLoading(true);
                           await rejectRequest(row["id"]);
-                          router.push("/staff/alumni-request");
                           toast.success("Request has been rejected");
+                          if (typeof window !== "undefined") {
+                            const height = window.innerHeight;
+                            console.log("Height: ", height);
+                            window.location.reload();
+                          }
+                          // setLoading(false);
                         } catch (error) {
+                          setLoading(false);
                           toast.error("Failed to accept request");
                         }
                       }
@@ -256,7 +276,10 @@ const BasicTable: React.FC<
           <Button
             onClick={() => {
               if (pages > 1) {
-                setPages(pages - 1);
+                const page = pages - 1; 
+                setOffset((page-1) * 25 + 1);
+                setPages(page);
+                          
               }
               pagination(pages - 1);
             }}
@@ -268,8 +291,11 @@ const BasicTable: React.FC<
         {pages > 0 && (
           <Button
             onClick={() => {
-              setPages(pages - 1);
-              pagination(pages - 1);
+              const page = pages - 1; 
+              setOffset((page-1) * 25 + 1);
+              setPages(page);
+              pagination(page);
+                
             }}
           >
             {" "}
@@ -278,8 +304,10 @@ const BasicTable: React.FC<
         )}
         <Button
           onClick={() => {
-            setPages(pages);
-            pagination(pages);
+            const page = pages; 
+            setOffset((page-1) * 25 + 1);
+            setPages(page);
+            pagination(page);
           }}
         >
           {" "}
@@ -288,8 +316,10 @@ const BasicTable: React.FC<
         {next && (
           <Button
             onClick={() => {
-              setPages(pages + 1);
-              pagination(pages + 1);
+              const page = pages + 1;
+              setOffset((page-1) * 25 + 1);
+              setPages(page);
+              pagination(page);
             }}
           >
             {" "}
@@ -299,8 +329,10 @@ const BasicTable: React.FC<
         {next && (
           <Button
             onClick={() => {
-              setPages(pages + 1);
-              pagination(pages + 1);
+              const page = pages + 1;
+              setOffset((page - 1) * 25 + 1);
+              setPages(page);
+              pagination(page);
             }}
             hidden={!next}
           >

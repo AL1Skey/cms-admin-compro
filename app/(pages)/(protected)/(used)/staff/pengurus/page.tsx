@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import BasicTable from '../../components/basic-table';
+import {deleteAct} from './action/action';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { cookies } from 'next/headers';
+import AddButton from '../../components/AddButton';
 
 
 const dataset = [
@@ -55,11 +57,11 @@ const Page = async() => {
             <CardHeader>
                 <div className="flex justify-between">
                     <CardTitle>Tim Kepengurusan</CardTitle>
-                    <Button><a href="pengurus/add">Add</a></Button>
+                    <AddButton href="pengurus/add" />
                 </div>
             </CardHeader>
             <CardContent>
-            <BasicTable columns={columns} tableData={data} />
+            <BasicTable columns={columns} tableData={data} action={deleteAct} />
             </CardContent>
           </Card>
             

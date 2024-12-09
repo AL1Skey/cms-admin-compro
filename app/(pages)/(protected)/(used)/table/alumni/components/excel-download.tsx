@@ -12,7 +12,7 @@ export default function ExcelDownloader() {
   const handleDownload = async () => {
     setIsLoading(true)
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/excel/alumni`, {
+      const response = await fetch(`https://api.iaajofficial.com/api/alumni/export`, {
         method: 'GET',
       })
 

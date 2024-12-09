@@ -22,6 +22,8 @@ const Form = ({ data, notEdit = false,action }: PageProps) => {
   const [formData, setFormData] = useState({
     image: data?.image || "",
     name: data?.name || "",
+    angkatan: data?.angkatan || "",
+    jurusan: data?.jurusan || "",
     position: data?.position || "",
     description: data?.description || "",
     phone: data?.phone || "",
@@ -81,6 +83,28 @@ const Form = ({ data, notEdit = false,action }: PageProps) => {
                 type="text"
                 id="name"
                 value={formData.name}
+                onChange={handleInputChange}
+                readOnly={notEdit}
+              />
+            </div>
+            <div>
+              <Label htmlFor="name">Angkatan:</Label>
+              <Input
+                name="angkatan"
+                type="text"
+                id="angkatan"
+                value={formData.angkatan}
+                onChange={handleInputChange}
+                readOnly={notEdit}
+              />
+            </div>
+            <div>
+              <Label htmlFor="name">Jurusan:</Label>
+              <Input
+                name="jurusan"
+                type="text"
+                id="jurusan"
+                value={formData.jurusan}
                 onChange={handleInputChange}
                 readOnly={notEdit}
               />
@@ -169,7 +193,7 @@ const Form = ({ data, notEdit = false,action }: PageProps) => {
             <div style={{ marginTop: "1rem" }} />
             {!notEdit && <Button type="submit">
               {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-              {isPending ? "Loading..." : "Sign In"}
+              {isPending ? "Loading..." : "Submit"}
               </Button>}
           </form>
         </CardContent>

@@ -4,6 +4,7 @@ import BasicTable from '../../components/basic-table';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import {cookies} from 'next/headers';
+import AddButton from '../../components/AddButton';
 const dataset = [
     {
         image: "image-url-1",
@@ -44,7 +45,7 @@ const Page = async() => {
             <CardHeader>
                 <div className="flex justify-between">
                     <CardTitle>Karir</CardTitle>
-                    <Button><Link href="karir/add">Add</Link></Button>
+                    <AddButton href="karir/add" />
                 </div>
             </CardHeader>
             <CardContent>

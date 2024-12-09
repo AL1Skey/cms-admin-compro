@@ -52,7 +52,7 @@ const Page = async({
             <Card>
             <CardHeader>
                 <div className="flex justify-between">
-                    <CardTitle>Alumni</CardTitle>
+                    <CardTitle>Alumni Request</CardTitle>
                     <div className='flex justify-between gap-10'>
                     <Filter />
                     </div>

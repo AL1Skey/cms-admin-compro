@@ -8,6 +8,7 @@ import { deleteAct } from './action/action';
 import ExcelImport from './components/excel-form';
 import ExcelDownloader from './components/excel-download';
 import Filter from './components/FIlter';
+import AddButton from '../../components/AddButton';
 const dataset = [
     {
         name: 'John Doe',
@@ -58,7 +59,7 @@ const Page = async({
                     <CardTitle>Alumni</CardTitle>
                     <div className='flex justify-between gap-10'>
                     <Filter />
-                    <Button><Link href="alumni/add">Add</Link></Button>
+                    <AddButton href="alumni/add" />
                     <ExcelImport/>
                     <ExcelDownloader/>
 

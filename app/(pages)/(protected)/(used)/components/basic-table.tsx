@@ -7,6 +7,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import truncate from 'truncate-html'
 import { Eye, SquarePen, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { usePathname } from "next/navigation";
@@ -14,6 +15,8 @@ import Link from "next/link";
 import DeleteConfirmationDialog from "@/components/delete-confirmation-dialog";
 import { useRouter } from 'next/navigation';
 import { useState } from "react";
+import EditButton from "./EditButton";
+import { toast } from "sonner";
 const BasicTable: React.FC<Partial<{
   columns: any[];
   tableData: any[]|undefined|null;
@@ -35,8 +38,11 @@ const BasicTable: React.FC<Partial<{
           async function runAct(){
           if (action){
           await action(actId);
-          }
-          router.refresh();
+          toast.success("Data deleted successfully");
+        }
+          if (typeof window !== 'undefined') {
+            window.location.reload();
+            }
           }
           runAct();
         }}
@@ -47,7 +53,7 @@ const BasicTable: React.FC<Partial<{
           <TableRow>
             {columns?.map((column, index) => (
               <TableHead key={`basic-table-column-${index}`} className="text-center">
-                {column}
+                {column === "id" ? "No" : column}
               </TableHead>
             ))}
             <TableHead className="text-center">action</TableHead>
@@ -78,7 +84,14 @@ const BasicTable: React.FC<Partial<{
                     </TableCell>
                   )}
 
-                  {!["image","phone","email","facebook","instagram","twitter", "id","createdAt","updatedAt","approval"].includes(key) && (
+                  {key === 'description' && (
+                    <TableCell key={`table-data-cell-${index}`}>
+                    <div dangerouslySetInnerHTML={{ __html: `${truncate(row[key],10, { byWords: true })}` }}>
+                    </div>
+                    </TableCell>
+                  )}
+
+                  {!["image","description","phone","email","facebook","instagram","twitter", "id","createdAt","updatedAt","approval"].includes(key) && (
                     <TableCell key={`table-data-cell-${index}`}>
                       {row[key]}
                     </TableCell>
@@ -94,15 +107,9 @@ const BasicTable: React.FC<Partial<{
                       <Eye className="w-4 h-4" /> View
                     </Button>
                   </Link>
-                  <Link
-                    href={
+                  <EditButton href={
                       pathname + `/update/${row && row["id"] ? row["id"] : ""}`
-                    }
-                  >
-                    <Button>
-                      <SquarePen className="w-3 h-3" /> Edit
-                    </Button>
-                  </Link>
+                    }/>
                   <Button
                     onClick={() => {
                       setActId(row["id"]);

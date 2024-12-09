@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import UploadSingleFile from "../../components/forms/upload-single-file";
+import UploadSingleFile from "./components/upload-single-file";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import WysiwygArea from "../../components/WysiwygArea";
 
 type PageProps = Partial<{
   data: any;
@@ -19,7 +20,7 @@ const Form = ({ data, notEdit = false,action }: PageProps) => {
   const [formData, setFormData] = useState({
     image: data?.image || "",
     title: data?.title || "",
-    decription: data?.decription || "",
+    description: data?.description || "",
     end_date: data?.end_date || "",
     email: data?.email || "",
   });
@@ -71,12 +72,7 @@ const Form = ({ data, notEdit = false,action }: PageProps) => {
             </div>
             <div>
               <Label htmlFor="description">Decription:</Label>
-              <Textarea
-                name="description"
-                id="description"
-                defaultValue={formData.decription}
-                readOnly={notEdit}
-              />
+              <WysiwygArea content={formData.description} />
             </div>
             <div>
               <Label htmlFor="email">Email:</Label>

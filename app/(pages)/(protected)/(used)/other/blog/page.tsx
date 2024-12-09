@@ -5,9 +5,11 @@ import BasicTable from '../../components/basic-table';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { cookies } from 'next/headers';
+import AddButton from '../../components/AddButton';
 
 const dataset = [
     {
+        id: "1",
         image: "image-url-1",
         title: "Title 1",
         createAt: new Date().toISOString(),
@@ -16,6 +18,7 @@ const dataset = [
         description: "Description 1"
     },
     {
+        id: "2",
         image: "image-url-2",
         title: "Title 2",
         createAt: new Date().toISOString(),
@@ -43,7 +46,7 @@ const Page = async() => {
             <CardHeader>
                 <div className="flex justify-between">
                     <CardTitle>Blog</CardTitle>
-                    <Button><Link href="blog/add">Add</Link></Button>
+                    <AddButton href="blog/add" />
                 </div>
             </CardHeader>
             <CardContent>

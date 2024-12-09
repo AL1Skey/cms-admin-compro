@@ -33,7 +33,7 @@ const Social = ({ locale }: { locale: string }) => {
           <form
             action={async () => {
               "use server";
-              await signIn("google", { redirectTo: `/${locale}/dashboard/analytics` });
+              await signIn("google", { redirectTo: `/${locale}/home/banner` });
             }}
           >
             <button type="submit" className="inline-flex h-10 w-10 p-2 bg-[#EA4335] text-white text-2xl flex-col items-center justify-center rounded-full">

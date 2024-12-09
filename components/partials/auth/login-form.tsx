@@ -60,7 +60,7 @@ const LoginForm = () => {
 
           })
         } else {
-          router.push('/dashboard/analytics');
+          router.push('/home/banner');
           toast.success("Successfully logged in");
         }
       } catch (err: any) {

@@ -1,0 +1,70 @@
+.ql-container {
+    background-color: #1e1e1e; /* Dark background */
+    color: #ffffff; /* Light text */
+    border: 1px solid #333; /* Subtle border for dark mode */
+  }
+  
+  .ql-toolbar {
+    background-color: #2b2b2b; /* Dark toolbar background */
+    border: 1px solid #333;
+    color: #ccc; /* Toolbar button text color */
+  }
+  
+  .ql-toolbar .ql-stroke {
+    stroke: #ccc; /* Toolbar button icons */
+  }
+  
+  .ql-toolbar .ql-fill {
+    fill: #ccc; /* Toolbar button icons */
+  }
+  
+  .ql-toolbar .ql-picker {
+    color: #ccc;
+  }
+  
+  .ql-toolbar .ql-picker-options {
+    background-color: #2b2b2b; /* Dropdown menu background */
+    border: 1px solid #333;
+  }
+  
+  .ql-toolbar .ql-picker-options .ql-picker-item {
+    color: #ccc; /* Dropdown item text color */
+  }
+  
+  .ql-toolbar .ql-active,
+  .ql-toolbar .ql-active .ql-stroke {
+    color: #fff; /* Active button text */
+    stroke: #fff; /* Active button icon stroke */
+  }
+  
+  .ql-editor {
+    background-color: #1e1e1e; /* Dark editor background */
+    color: #ffffff; /* Light text */
+  }
+  
+  .ql-editor a {
+    color: #4e9aff; /* Links in dark mode */
+  }
+  
+  .ql-editor p {
+    color: #ffffff; /* Paragraph text color */
+  }
+  
+  .ql-editor blockquote {
+    color: #aaa; /* Blockquote text color */
+    border-left: 4px solid #4e9aff;
+    margin: 0;
+    padding-left: 10px;
+  }
+  
+  .ql-editor .ql-video {
+    border: 1px solid #444; /* Video border */
+  }
+  
+  .ql-toolbar button:hover {
+    background-color: #444; /* Button hover background */
+  }
+  
+  .quill > .ql-toolbar:first-child {
+    display: none !important;
+  }

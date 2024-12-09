@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { cookies } from 'next/headers';
 import { deleteAct } from './action/action';
+import AddButton from '../../components/AddButton';
 
 const dataset = [
     {
@@ -52,7 +53,7 @@ const Page = async() => {
             <CardHeader>
                 <div className="flex justify-between">
                     <CardTitle>Jurusan</CardTitle>
-                    <Button><Link href="jurusan/add">Add</Link></Button>
+                    <AddButton href="jurusan/add" />
                 </div>
             </CardHeader>
             <CardContent>

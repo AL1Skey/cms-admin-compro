@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import { deleteAct } from './action/action';
+import AddButton from "../../components/AddButton";
 const column = [
     "No",
     "Image",
@@ -28,7 +29,7 @@ const Page = async() => {
             <CardHeader>
                 <div className="flex justify-between">
                     <CardTitle>Banner</CardTitle>
-                    <Link href="banner/add"><Button>Add</Button></Link>
+                    <AddButton href="banner/add" />
                 </div>
             </CardHeader>
             <CardContent>

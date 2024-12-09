@@ -87,6 +87,7 @@ const BasicTable: React.FC<
         .catch((err) => {
           console.error(err);
         });
+      data.sort((a: any, b: any) => a.name.localeCompare(b.name));
       setTableData(data);
       setNext(isNext?.length > 0);
       setPrev(isPrev?.length > 0);
