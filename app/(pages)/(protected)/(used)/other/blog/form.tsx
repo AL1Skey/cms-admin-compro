@@ -35,6 +35,7 @@ const Form = ({ data, notEdit = false,action }: PageProps) => {
     category: data?.category || "",
     createAt: data?.createAt || "",
   });
+  const [pending,setPending] = useState(false)
   const router = useRouter();
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -54,11 +55,17 @@ const Form = ({ data, notEdit = false,action }: PageProps) => {
       <Card>
         <CardContent>
           <form action={(e:FormData)=>{
+            async function submitData(){
+              setPending(!pending)
             if(action){
-              action(e)
+                await action(e)
+              }
+              toast.success("Data has been saved")
+              router.back()
+              setPending(!pending)
             }
-            toast.success("Data has been saved")
-            router.back()
+            submitData()
+
           }
           }>
             {data?.id && <input type="hidden" name="id" value={data?.id} />}
@@ -130,7 +137,7 @@ const Form = ({ data, notEdit = false,action }: PageProps) => {
            
             
             <div style={{ marginTop: "1rem" }} />
-            {!notEdit && <Button type="submit">Submit</Button>}
+            {!notEdit && !pending ? <Button type="submit">Submit</Button> : <Button disabled={true}>Pending </Button>}
           </form>
         </CardContent>
       </Card>

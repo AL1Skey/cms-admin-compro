@@ -24,6 +24,7 @@ const Form = ({ data, notEdit = false,action }: PageProps) => {
     end_date: data?.end_date || "",
     email: data?.email || "",
   });
+  const [pending, setPending] = useState(false);
   const router = useRouter();
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -97,7 +98,7 @@ const Form = ({ data, notEdit = false,action }: PageProps) => {
               />
             </div>
             <div style={{ marginTop: "1rem" }} />
-            {!notEdit && <Button type="submit">Submit</Button>}
+            {!notEdit && !pending ? <Button type="submit">Submit</Button> : <Button disabled={true}>Pending</Button>}
           </form>
         </CardContent>
       </Card>

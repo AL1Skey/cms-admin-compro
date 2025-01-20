@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import BasicTable from '../../components/basic-table';
 import { Button } from '@/components/ui/button';
+import { deleteAct } from './action/action';
 import Link from 'next/link';
 import {cookies} from 'next/headers';
 import AddButton from '../../components/AddButton';
@@ -49,7 +50,7 @@ const Page = async() => {
                 </div>
             </CardHeader>
             <CardContent>
-            <BasicTable columns={Object.keys(dataset[0])} tableData={data} />
+            <BasicTable columns={Object.keys(dataset[0])} tableData={data} action={deleteAct} />
             </CardContent>
           </Card>
         </div>

@@ -22,6 +22,11 @@ export const add = async(data:FormData)=>{
         console.log(error);
     }
     );
+    // if (typeof window !== "undefined") {
+    //     const height = window.innerHeight;
+    //     console.log("Height: ", height);
+    //     window.location.href = '/other/blog';
+    //   }
     console.log(response);
     return response;
 }
